@@ -1833,7 +1833,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .details .loadcard__id:hover { color: var(--d-blue-dk); text-decoration: underline; }
 .details .loadcard__nav::before { left: 22px; right: 22px; height: 2px; border-radius: 1px; background: var(--d-blue-bd); }
 .details .loadcard__navprev { gap: 6px; background: transparent; }
-.details .loadcard__navdot { width: 22px; height: 22px; border: 1px solid var(--d-line); background: #fff; font-size: 10px; font-weight: 600; color: var(--d-body); transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.details .loadcard__navdot { width: auto; min-width: 22px; height: 22px; padding: 0 5px; line-height: 1; border: 1px solid var(--d-line); background: #fff; font-size: 10px; font-weight: 600; color: var(--d-body); transition: background .15s ease, color .15s ease, border-color .15s ease; }
 .details .loadcard__navdot--count { border-color: var(--d-blue-bd); background: var(--d-blue-bg); color: var(--d-blue); }
 .details .loadcard__navprev:hover .loadcard__navdot { background: var(--d-blue-bg); border-color: var(--d-blue-bd); color: var(--d-blue); }
 .details .loadcard__navnum { font-size: 11px; font-weight: 600; color: var(--d-body); }
@@ -6052,8 +6052,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
       idLink,
       el("div", { className: "loadcard__nav" }, [
         el("span", { className: "loadcard__navprev" }, [
-          el("span", { className: "loadcard__navdot" }, svg('<path d="M14 8l-4 4 4 4"/>')),
-          el("span", { className: "loadcard__navnum", textContent: load.from })
+          el("span", { className: "loadcard__navdot", textContent: load.from })
         ]),
         el("span", { className: "pill pill--status", "data-status": load.status.toLowerCase(), textContent: "Status: " + load.status }),
         el("span", { className: "loadcard__navdot loadcard__navdot--count", textContent: load.to })
