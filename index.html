@@ -721,7 +721,7 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 .menu button:hover { background: var(--c-blue-soft); color: var(--c-blue); }
 
 .card__loc { display: flex; align-items: center; gap: 7px; margin-top: 8px; font-size: var(--fs-md); font-weight: 300; }
-.card__loc svg { width: 14px; height: 14px; color: var(--c-green); flex: 0 0 auto; }
+.card__loc svg { width: 14px; height: 14px; color: var(--c-blue); flex: 0 0 auto; }
 .card__equip { display: flex; gap: 12px; font-size: var(--fs-11); color: var(--c-muted); }
 
 /* load panel -------------------------------------------------------------- */
@@ -1515,7 +1515,7 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 .tmpl[aria-current="true"] { border-color: var(--c-blue-ring); box-shadow: 0 0 0 1px var(--c-blue-ring) inset; }
 .tmpl__icon {
   display: grid; place-items: center; flex: 0 0 auto; width: 44px; height: 42px;
-  border: 1px solid var(--c-line); border-radius: var(--r-md); color: var(--c-orange);
+  border: 1px solid var(--c-line); border-radius: var(--r-md); color: var(--c-blue);
 }
 .tmpl__icon svg { width: 18px; height: 18px; }
 .tmpl__body { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
@@ -1656,9 +1656,6 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 .dhead { display: flex; align-items: center; gap: 10px; padding: 11px 12px 11px 14px; border-bottom: 1px solid var(--d-soft); }
 .dhead__icon { display: grid; place-items: center; flex: 0 0 auto; width: 28px; height: 28px; padding: 6px; border-radius: 8px; background: var(--d-blue-bg); border: 1px solid var(--d-blue-bd); color: var(--d-blue); transition: background .15s ease, color .15s ease; }
 .dhead__icon svg { width: 14px; height: 14px; }
-.dhead__icon--green { background: var(--d-green-bg); border-color: var(--d-green-bd); color: var(--d-green); }
-.dhead__icon--amber { background: var(--d-amber-bg); border-color: var(--d-amber-bd); color: var(--d-amber); }
-.dhead__icon--red { background: var(--d-red-bg); border-color: var(--d-red-bd); color: var(--d-red); }
 .dhead__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .dhead__text h4 { font-size: 12px; line-height: 16px; font-weight: 600; color: var(--d-ink); }
 .dhead__text p { font-size: 11px; line-height: 14px; font-weight: 400; color: var(--d-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -1719,7 +1716,7 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 
 .details .card__loc { display: flex; align-items: center; gap: 10px; width: 100%; margin-top: 6px; padding: 8px 8px 8px 10px; background: var(--d-page); border: 1px solid var(--d-line); border-radius: 8px; text-align: left; transition: background .15s ease, border-color .15s ease; }
 .details .card__loc:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
-.card__locicon { display: grid; place-items: center; flex: 0 0 auto; width: 28px; height: 28px; padding: 6px; border-radius: 8px; background: var(--d-green-bg); border: 1px solid var(--d-green-bd); color: var(--d-green); }
+.card__locicon { display: grid; place-items: center; flex: 0 0 auto; width: 28px; height: 28px; padding: 6px; border-radius: 8px; background: var(--d-blue-bg); border: 1px solid var(--d-blue-bd); color: var(--d-blue); }
 .details .card__loc .card__locicon svg { width: 14px; height: 14px; color: inherit; }
 .card__loctext { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 1px; }
 .card__loctext small { font-size: 10px; line-height: 14px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; color: var(--d-faint); }
@@ -1905,7 +1902,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .details .files { gap: 8px; }
 .details .file { grid-template-columns: 30px minmax(0,1fr) auto; gap: 10px; padding: 8px 10px; border: 1px solid var(--d-line); border-radius: 8px; transition: background .15s ease, border-color .15s ease; }
 .details .file:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
-.details .file__type { width: 30px; height: 30px; border-radius: 8px; background: var(--d-red-bg); border: 1px solid var(--d-red-bd); color: var(--d-red); font-size: 10px; letter-spacing: .02em; }
+.details .file__type { width: 30px; height: 30px; border-radius: 8px; background: var(--d-blue-bg); border: 1px solid var(--d-blue-bd); color: var(--d-blue); font-size: 10px; letter-spacing: .02em; }
 .details .file__name { font-size: 12px; font-weight: 500; color: var(--d-ink); }
 .details .file:hover .file__name { color: var(--d-blue); }
 .details .file__size, .details .file__date { font-size: 11px; color: var(--d-muted); }
@@ -1915,7 +1912,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .details .member__name { font-size: 12px; font-weight: 600; color: var(--d-ink); }
 .details .member:hover .member__name { color: var(--d-blue); }
 .details .member__role, .details .member__meta { font-size: 11px; color: var(--d-muted); }
-.details .member__meta svg { color: var(--d-amber-pt); }
+.details .member__meta svg { color: var(--d-blue); }
 .details .loadmember { padding: 9px 10px; border: 1px solid var(--d-line); border-radius: 8px; transition: background .15s ease, border-color .15s ease; }
 .details .loadmember:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
 .details .loadmember--open { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
@@ -2585,7 +2582,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
         <section class="assets">
           <header class="assets__head">
-            <span class="dhead__icon dhead__icon--green"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 9"/></svg></span>
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 9"/></svg></span>
             <div class="dhead__text"><h4>Images</h4><p>Photos shared in this chat</p></div>
             <button type="button" class="link" data-action="toggle-images" aria-expanded="false">View All</button>
           </header>
@@ -2594,7 +2591,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
         <section class="assets">
           <header class="assets__head">
-            <span class="dhead__icon dhead__icon--red"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>
             <div class="dhead__text"><h4>Files</h4><p>Documents and attachments</p></div>
             <button type="button" class="link" data-action="toggle-files" aria-expanded="false">View All</button>
           </header>
@@ -2603,7 +2600,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
         <section class="assets">
           <header class="assets__head">
-            <span class="dhead__icon dhead__icon--amber"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
             <div class="dhead__text"><h4>Members</h4><p>Everyone on this conversation</p></div>
           </header>
           <ul class="members" role="list" data-role="members"></ul>
@@ -7317,7 +7314,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
     const title = el("p");
     const head = el("header", { className: "dhead" }, [
-      el("span", { className: "dhead__icon dhead__icon--green" }, svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>')),
+      el("span", { className: "dhead__icon" }, svg('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>')),
       el("div", { className: "dhead__text" }, [el("h4", { textContent: "Hours of service" }), title]),
       trailing
     ]);
