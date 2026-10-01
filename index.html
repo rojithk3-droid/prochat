@@ -10,7 +10,7 @@
 <title>Prochat — Dispatch PRO · build 12</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap" rel="stylesheet">
 <style>
 /* ============================================================================
    Prochat — Dispatch PRO
@@ -47,9 +47,7 @@
   --shadow-1: 0 1px 2px rgba(16,24,40,.06);
   --shadow-2: 0 8px 28px rgba(16,24,40,.18);
 
-  --h-masthead: 76px;
-  --h-modules: 52px;
-  --w-rail: 71px;
+  --w-rail: 45px;   /* the Agent Pay Profile sidebar: 56.25px declared × its 0.8 zoom */
   --w-channels: 224px;
   --w-inbox: 312px;
   --w-details: 340px;
@@ -67,7 +65,7 @@ body {
   color: var(--c-ink);
   background: var(--c-surface);
   display: grid;
-  grid-template-rows: var(--h-masthead) var(--h-modules) minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
   height: 100vh;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -107,28 +105,6 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
    line, not per-contact — shown but not editable. */
 .field input:disabled { background: var(--c-surface-2); color: var(--c-muted); }
 
-/* ---------- masthead ----------------------------------------------------- */
-.masthead {
-  display: flex; align-items: center; gap: 26px;
-  padding-inline: 24px;
-  background: var(--c-navy); color: #fff;
-}
-.masthead__brand { display: flex; align-items: center; gap: 14px; }
-.logo { display: inline-flex; border-radius: 4px; overflow: hidden; font-weight: 700; font-size: 15px; letter-spacing: .2px; }
-.logo__dispatch { background: #fff; color: #16386b; padding: 5px 9px; }
-.logo__pro { background: var(--c-orange); color: #fff; padding: 5px 9px; }
-.masthead__divider { width: 1px; height: 22px; background: rgba(255,255,255,.4); }
-.masthead__tenant { font-size: var(--fs-lg); font-weight: 500; white-space: nowrap; }
-
-.masthead__search { flex: 1 1 573px; max-width: 573px; }
-.masthead__search form {
-  display: flex; align-items: center;
-  height: 43px; padding: 0 8px 0 18px;
-  background: #fff; border-radius: var(--r-md);
-}
-.masthead__search input { flex: 1; min-width: 0; border: 0; background: none; font-size: var(--fs-md); color: var(--c-ink-2); }
-.masthead__search input:focus { outline: none; }
-.masthead__search .icon-btn { color: var(--c-ink-2); }
 
 .icon-btn {
   display: grid; place-items: center;
@@ -138,37 +114,77 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 }
 .icon-btn:hover { background: rgba(16,24,40,.07); color: var(--c-ink-2); }
 
-.fuel { display: flex; align-items: center; gap: 14px; }
-.fuel__icon { width: 36px; height: 36px; }
-.fuel__item { display: flex; flex-direction: column; }
-.fuel__value { order: 1; font-size: var(--fs-xl); font-weight: 600; line-height: 1.15; }
-.fuel__label { order: 2; font-size: var(--fs-sm); font-weight: 300; opacity: .92; }
-.fuel__meta  { order: 3; font-size: var(--fs-sm); opacity: .72; }
 
-.quick ul { display: flex; gap: 16px; }
-.quick__btn {
-  display: flex; flex-direction: column; align-items: center; gap: 3px;
-  min-width: 42px; padding: 3px; background: none; border: 0; color: #fff;
-  font-size: var(--fs-sm); font-weight: 300; border-radius: var(--r-md);
+
+/* ---------- app chrome: top bar, breadcrumb, sidebar ----------------------
+   Lifted from agent-pay-profile.html so both screens share one header and
+   one left rail. That page runs everything at body{zoom:.8}; Prochat doesn't,
+   so each piece carries the same zoom itself and keeps the original declared
+   values (66.25px topbar, 56.25px sidebar, …) — they paint identically. */
+.dp-topbar, .dp-crumb, .dp-sidebar {
+  --surface: #FFFFFF; --border: #E5E7EB; --border-soft: #F3F4F6; --page-bg: #F9FAFB;
+  --text-dark: #101828; --text-heading: #1E2939; --text-body: #364153; --text-muted: #6A7282; --text-faint: #99A1AF;
+  --card-navy: #16274A; --navy-deep: #101B33; --blue-pill: #2E7DF7; --icon-muted-dark: #66739A;
+  --icon-default: #4A5468; --red: #E7000B; --muted-fg: #71717A;
+  zoom: .8; font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif; font-optical-sizing: auto;
 }
-.quick__btn:hover { background: rgba(255,255,255,.14); }
-.quick__icon { width: 22px; height: 22px; }
-.quick__icon--accent { color: var(--c-orange); stroke-width: 3.2; }
-.quick__icon--solid { fill: currentColor; stroke: none; }
+.dp-topbar {
+  height: 66.25px; background: var(--surface); border-bottom: 1.25px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 20px; gap: 20px; z-index: 10;
+}
+.dp-topbar-left { display: flex; align-items: center; gap: 22.5px; min-width: 0; flex: 1 1 auto; }
+.dp-company-title { font-size: 15px; line-height: 18.75px; font-weight: 700; color: var(--text-dark); }
+.dp-company-sub { font-size: 11.25px; line-height: 15px; font-weight: 500; color: var(--text-faint); margin-top: 1.25px; }
+.dp-search {
+  background: var(--surface); border: 1.25px solid var(--border); border-radius: 6.25px; height: 35px;
+  width: 280px; flex: 0 1 280px; display: flex; align-items: center; padding: 0 12.5px; gap: 7.5px;
+}
+.dp-topbar svg { stroke-width: 2; }
+.dp-search svg { color: var(--text-faint); flex: 0 0 auto; width: 15px; height: 15px; }
+.dp-search input { border: none; outline: none; font-family: inherit; font-size: 12.5px; line-height: 20px; height: 20px; color: var(--text-body); flex: 1; min-width: 0; background: transparent; }
+.dp-search input::placeholder { color: var(--text-faint); }
+.dp-search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.dp-topbar-right { display: flex; align-items: center; gap: 16.25px; flex: 0 0 auto; }
+.dp-surcharge {
+  background: var(--page-bg); box-shadow: inset 0 0 0 1.25px var(--border);
+  border-radius: 7.5px; padding: 7.5px 12.5px; display: flex; align-items: center; gap: 10px; flex: 0 0 auto;
+}
+.dp-surcharge-label { font-size: 10px; line-height: 12.5px; font-weight: 700; letter-spacing: .5px; color: var(--muted-fg); text-transform: uppercase; }
+.dp-surcharge-date { font-size: 10px; line-height: 12.5px; color: var(--muted-fg); opacity: .75; margin-top: 2.5px; }
+.dp-surcharge-value { font-size: 16.25px; line-height: 20px; font-weight: 800; color: var(--text-heading); }
+.dp-icon-actions { display: flex; align-items: center; gap: 6.25px; flex: 0 0 auto; }
+.dp-icon-btn {
+  position: relative; width: 35px; height: 35px; padding: 0; border-radius: 7.5px;
+  display: flex; align-items: center; justify-content: center; color: var(--icon-default); background: none; border: none; cursor: pointer;
+}
+.dp-icon-btn:hover { background: var(--border-soft); }
+.dp-icon-btn svg { width: 17px; height: 17px; }
+.dp-icon-btn .dp-dot { position: absolute; top: 6.25px; right: 7.5px; width: 6.25px; height: 6.25px; border-radius: 50%; background: var(--red); border: 1.25px solid var(--surface); }
+.dp-popover {
+  position: absolute; top: calc(100% + 7.5px); right: 0; width: 220px; background: var(--surface);
+  border: 1.25px solid var(--border); border-radius: 7.5px; padding: 10px 12.5px;
+  font-size: 12.5px; font-weight: 400; line-height: 1.4; color: var(--text-body); text-align: left; white-space: normal; cursor: default; z-index: 50;
+}
+.dp-user-chip { display: flex; align-items: center; gap: 7.5px; cursor: pointer; flex: 0 0 auto; }
+.dp-user-name { font-size: 13.75px; font-weight: 600; color: var(--text-heading); }
+.dp-user-chip .dp-chevron { color: var(--text-faint); width: 14px; height: 14px; }
+.dp-avatar { width: 32.5px; height: 32.5px; border-radius: 50%; background: var(--card-navy); color: #fff; font-size: 12.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
 
-.account { display: flex; align-items: center; gap: 9px; margin-left: auto; padding: 3px 4px; background: none; border: 0; color: #fff; border-radius: var(--r-pill); }
-.account:hover { background: rgba(255,255,255,.14); }
-.account__avatar { width: 46px; height: 46px; border-radius: 50%; }
-.account__name { font-size: var(--fs-lg); font-weight: 500; white-space: nowrap; }
-.account__caret { width: 9px; height: 9px; }
+.dp-crumb { background: var(--surface); border-bottom: 1.25px solid var(--border); padding: 11.25px 23.75px; font-size: 12.5px; line-height: 17.5px; }
+.dp-crumb span { color: var(--text-faint); }
+.dp-crumb span[aria-current="page"] { color: var(--text-dark); font-weight: 600; }
 
-/* ---------- module nav --------------------------------------------------- */
-.modules { display: flex; padding-inline: 146px 24px; background: var(--c-surface); border-bottom: 1px solid var(--c-line); }
-.modules ul { display: flex; gap: clamp(16px, 3vw, 50px); }
-.modules li { display: flex; }
-.modules a { display: flex; align-items: center; font-size: var(--fs-lg); font-weight: 500; color: var(--c-ink-2); border-bottom: 2px solid transparent; white-space: nowrap; }
-.modules a:hover { color: var(--c-blue); }
-.modules a[aria-current="page"] { color: var(--c-ink); border-bottom-color: var(--c-blue); }
+.dp-sidebar {
+  width: 56.25px; background: var(--navy-deep); border-right: 1.25px solid var(--border);
+  display: flex; flex-direction: column; align-items: center; padding: 12.5px 0; gap: 6.25px; overflow-y: auto;
+}
+.dp-sidebar::-webkit-scrollbar { width: 0; }
+.dp-side-logo { width: 32.5px; height: 32.5px; background: var(--blue-pill); border-radius: 7.5px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 11.25px; letter-spacing: .2px; flex: 0 0 auto; margin-bottom: 6.25px; }
+.dp-side-icon { position: relative; width: 37.5px; height: 33.75px; border-radius: 7.5px; display: flex; align-items: center; justify-content: center; color: var(--icon-muted-dark); background: none; border: none; cursor: pointer; flex: 0 0 auto; }
+.dp-side-icon svg { width: 18px; height: 18px; stroke-width: 1.8; }
+.dp-side-icon:hover { color: #C4CEE4; background: rgba(255,255,255,.06); }
+.dp-side-icon.active { color: #fff; background: rgba(255,255,255,.08); }
+.dp-side-icon.active::before { content: ''; position: absolute; left: 1.25px; top: 50%; transform: translateY(-50%); width: 2.5px; height: 20px; border-radius: 0 2.5px 2.5px 0; background: var(--blue-pill); }
 
 /* ---------- app shell ---------------------------------------------------- */
 .app {
@@ -194,12 +210,6 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 .app[data-details="closed"] .reopen { display: grid; }
 .app > * { min-width: 0; min-height: 0; }
 
-/* ---------- rail --------------------------------------------------------- */
-.rail { display: flex; flex-direction: column; justify-content: space-between; padding: 14px 0; background: var(--c-surface); border-right: 1px solid var(--c-line); }
-.rail__set { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.rail__btn { display: grid; place-items: center; width: 38px; height: 38px; padding: 8px; background: none; border: 0; border-radius: var(--r-md); color: #8a8f9c; }
-.rail__btn:hover { background: var(--c-blue-soft); color: var(--c-blue); }
-.rail__btn.is-active { color: var(--c-orange); }
 
 /* ---------- channels ----------------------------------------------------- */
 .channels { display: grid; grid-template-rows: auto minmax(0,1fr) auto; background: var(--c-surface); border-right: 1px solid var(--c-line); }
@@ -327,7 +337,6 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
    of the frames draw one, and it collides with the magnifier. */
 .inbox__search input::-webkit-search-cancel-button,
 .main__search input::-webkit-search-cancel-button,
-.masthead__search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
 .field__icon { position: absolute; right: 11px; width: 12px; height: 12px; color: var(--c-muted); pointer-events: none; }
 
 /* directory search results (people company-wide, not just conversations) */
@@ -1567,10 +1576,10 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 .reminder__foot { display: flex; gap: 8px; padding: 0 14px 14px; }
 
 /* ---------- responsive --------------------------------------------------- */
-@media (max-width: 1600px) { .modules { padding-inline: 24px; } .main__search { flex-basis: 200px; } }
+@media (max-width: 1600px) { .main__search { flex-basis: 200px; } }
 @media (max-width: 1400px) {
   :root { --w-details: 316px; --w-inbox: 292px; }
-  .fuel { display: none; }
+  .dp-topbar .dp-surcharge { display: none; }
   /* Keeps Current/Upcoming/Historic Load fitting on one row without a
      scrollbar once the details panel narrows to 292px. */
   .tabs--sub { gap: 10px; padding-inline: 10px; }
@@ -1583,14 +1592,13 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 
 @media (max-width: 1000px) {
   .app, .app[data-details="closed"] { grid-template-columns: var(--w-rail) var(--w-inbox) minmax(0,1fr); }
-  .channels, .quick, .masthead__search { display: none; }
-  .modules { overflow-x: auto; }
+  .channels, .dp-topbar .dp-search { display: none; }
 }
 
 @media (max-width: 780px) {
   body { grid-template-rows: auto auto minmax(0,1fr); }
   .app, .app[data-details="closed"] { grid-template-columns: minmax(0,1fr); }
-  .rail { display: none; }
+  .dp-sidebar { display: none; }
   .app[data-view="inbox"] .main { display: none; }
   .app[data-view="thread"] .inbox { display: none; }
   .details { width: min(320px,100%); }
@@ -1977,104 +1985,70 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
 <a class="skip-link" href="#main">Skip to conversation</a>
 
-<!-- ═══════════════ GLOBAL MASTHEAD ═══════════════ -->
-<header class="masthead">
-  <div class="masthead__brand">
-    <a class="logo" href="#" aria-label="Dispatch PRO home">
-      <span class="logo__dispatch">Dispatch</span><span class="logo__pro">PRO</span>
-    </a>
-    <span class="masthead__divider" role="presentation"></span>
-    <p class="masthead__tenant">Dawson Truck Lines</p>
-  </div>
-
-  <search class="masthead__search">
-    <form role="search" onsubmit="return false">
+<!-- ═══════════════ TOP BAR + BREADCRUMB (shared with Agent Pay Profile) ═══════════════ -->
+<header class="dp-topbar">
+  <div class="dp-topbar-left">
+    <div>
+      <div class="dp-company-title">Dawson Truck Lines</div>
+      <div class="dp-company-sub">Carrier &middot; MC 884210</div>
+    </div>
+    <search class="dp-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       <label class="visually-hidden" for="global-search">Search Dispatch PRO</label>
-      <input id="global-search" type="search">
-      <button type="submit" class="icon-btn" aria-label="Search">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5 21 21"/></svg>
+      <input id="global-search" type="search" placeholder="Search loads, drivers, customers, trailers...">
+    </search>
+  </div>
+  <div class="dp-topbar-right">
+    <div class="dp-surcharge">
+      <div><div class="dp-surcharge-label">Diesel FSC</div><div class="dp-surcharge-date">07/27/26</div></div>
+      <div class="dp-surcharge-value">$0.68</div>
+    </div>
+    <div class="dp-surcharge">
+      <div><div class="dp-surcharge-label">Gas FSC</div><div class="dp-surcharge-date">07/27/26</div></div>
+      <div class="dp-surcharge-value">0.30%</div>
+    </div>
+    <div class="dp-icon-actions">
+      <button type="button" class="dp-icon-btn" data-popover="Quick create: new load, customer, or agent" aria-label="Quick create">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
       </button>
-    </form>
-  </search>
-
-  <dl class="fuel" aria-label="Fuel surcharge index">
-    <span class="fuel__icon" aria-hidden="true">
-      <svg viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M3 21h13"/><path d="M14 9h3a2 2 0 0 1 2 2v6a1.5 1.5 0 0 0 3 0V9l-3-3"/><path d="M7 8h4"/></svg>
-    </span>
-    <div class="fuel__item">
-      <dt class="fuel__label">Fuel Surcharge Diesel</dt>
-      <dd class="fuel__value">$0.48</dd>
-      <dd class="fuel__meta">Last Updated: <time datetime="2023-12-11">12/11/2023</time></dd>
+      <button type="button" class="dp-icon-btn" data-popover="Need help? Contact support at support@dispatchpro.com" aria-label="Help">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.5 2.5 0 0 1 4.9.7c0 1.7-2.4 2-2.4 3.5"/><path d="M12 17.2v.1"/></svg>
+      </button>
+      <button type="button" class="dp-icon-btn" data-popover="No new messages" aria-label="Messages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <span class="dp-dot"></span>
+      </button>
+      <button type="button" class="dp-icon-btn" data-popover="No new notifications" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+      </button>
     </div>
-    <div class="fuel__item">
-      <dt class="fuel__label">Fuel Surcharge Gas</dt>
-      <dd class="fuel__value">0.18%</dd>
-      <dd class="fuel__meta">Last Updated: <time datetime="2023-12-11">12/11/2023</time></dd>
+    <div class="dp-user-chip">
+      <div class="dp-avatar">CS</div>
+      <div class="dp-user-name">Christian Snead</div>
+      <svg class="dp-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     </div>
-  </dl>
-
-  <nav class="quick" aria-label="Quick actions">
-    <ul>
-      <li><button type="button" class="quick__btn">
-        <svg viewBox="0 0 24 24" class="quick__icon quick__icon--accent" aria-hidden="true"><path d="M12 4v16M4 12h16"/></svg>
-        <span>Add Load</span></button></li>
-      <li><button type="button" class="quick__btn">
-        <svg viewBox="0 0 24 24" class="quick__icon" aria-hidden="true"><path d="M7 11v8H4a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h3Z"/><path d="M7 11l4-7a2 2 0 0 1 3 2l-1 5h5a2 2 0 0 1 2 2.4l-1.2 5A2 2 0 0 1 16.8 20H7"/></svg>
-        <span>Feedback</span></button></li>
-      <li><button type="button" class="quick__btn">
-        <svg viewBox="0 0 24 24" class="quick__icon" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-.9.8-.9 1.4v.4"/><circle cx="12" cy="17" r=".7" fill="currentColor" stroke="none"/></svg>
-        <span>Help</span></button></li>
-      <li><button type="button" class="quick__btn">
-        <svg viewBox="0 0 24 24" class="quick__icon quick__icon--solid" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg>
-        <span>Mail</span></button></li>
-      <li><button type="button" class="quick__btn">
-        <svg viewBox="0 0 24 24" class="quick__icon quick__icon--solid" aria-hidden="true"><path d="M18 16V11a6 6 0 1 0-12 0v5l-1.5 2.5h15L18 16Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
-        <span>Alerts</span></button></li>
-    </ul>
-  </nav>
-
-  <button type="button" class="account" aria-haspopup="menu" aria-expanded="false">
-    <img class="account__avatar" alt="" width="50" height="50"
-         src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50'%3E%3Ccircle cx='25' cy='25' r='25' fill='%23f0a43a'/%3E%3Ccircle cx='25' cy='19' r='8' fill='%23fff'/%3E%3Cpath d='M8 47a17 17 0 0 1 34 0Z' fill='%23fff'/%3E%3C/svg%3E">
-    <span class="account__name">Christian Snead</span>
-    <svg class="account__caret" viewBox="0 0 12 12" aria-hidden="true"><path d="m4 2 4 4-4 4"/></svg>
-  </button>
+  </div>
 </header>
 
-<!-- ═══════════════ MODULE NAV ═══════════════ -->
-<nav class="modules" aria-label="Modules">
-  <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Dispatch</a></li>
-    <li><a href="#">Equipment</a></li>
-    <li><a href="#" id="module-customer">Customer</a></li>
-    <li><a href="#">Personnel</a></li>
-    <li><a href="#">Safety</a></li>
-    <li><a href="#">Billing</a></li>
-    <li><a href="#" id="module-sales" aria-current="page">Sales</a></li>
-    <li><a href="#">Reporting</a></li>
-    <li><a href="#">Accounting</a></li>
-  </ul>
-</nav>
+<div class="dp-crumb" aria-label="Breadcrumb">
+  <span id="module-customer">Dispatch</span> <span>/</span> <span id="module-sales" aria-current="page">Prochat</span>
+</div>
 
 <!-- ═══════════════ APP SHELL ═══════════════ -->
 <div class="app" id="app" data-details="open" data-tab="direct" data-view="inbox">
 
-  <!-- ── icon rail ── -->
-  <nav class="rail" aria-label="Workspace">
-    <ul class="rail__set">
-      <li><button type="button" class="rail__btn" aria-label="Dashboard"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="1.5"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="1.5"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.5"/></svg></button></li>
-      <li><button type="button" class="rail__btn" aria-label="Orders"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg></button></li>
-      <li><button type="button" class="rail__btn is-active" aria-label="Fleet" aria-current="true"><svg viewBox="0 0 24 24"><path d="M3 16.5V7.5h11v9"/><path d="M14 10.5h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/></svg></button></li>
-      <li><button type="button" class="rail__btn" aria-label="People"><svg viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></button></li>
-      <li><button type="button" class="rail__btn" aria-label="Calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></button></li>
-      <li><button type="button" class="rail__btn" aria-label="Messages"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5Z"/></svg></button></li>
-      <li><button type="button" class="rail__btn" aria-label="Documents"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></li>
-    </ul>
-    <ul class="rail__set">
-      <li><button type="button" class="rail__btn" aria-label="Settings"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 3v2m0 14v2M3 12h2m14 0h2M5.6 5.6 7 7m10 10 1.4 1.4m0-12.8L17 7M7 17l-1.4 1.4"/></svg></button></li>
-      <li><button type="button" class="rail__btn" aria-label="Collapse navigation"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h9M4 17h16"/><path d="m16 9.5 3 2.5-3 2.5"/></svg></button></li>
-    </ul>
+  <!-- ── sidebar (shared with Agent Pay Profile) ── -->
+  <nav class="dp-sidebar" aria-label="Workspace">
+    <div class="dp-side-logo">DP</div>
+    <button type="button" class="dp-side-icon" title="Dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
+    <button type="button" class="dp-side-icon active" title="Dispatch" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17h11V6H2v11Z"/><path d="M13 10h4l4 4v3h-8v-7Z"/><circle cx="6.5" cy="19" r="1.6"/><circle cx="17.5" cy="19" r="1.6"/></svg></button>
+    <button type="button" class="dp-side-icon" title="Personnel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20v-1.6a4 4 0 0 0-4-4h-4a4 4 0 0 0-4 4V20"/><circle cx="12" cy="7.5" r="3.5"/></svg></button>
+    <button type="button" class="dp-side-icon" title="Rates"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 12.3 12.7 20a2 2 0 0 1-2.8 0l-6-6a2 2 0 0 1 0-2.8L11.7 3.5 20.6 4l.6 8.9-.6-.6Z"/><circle cx="15.5" cy="8.5" r="1.4"/></svg></button>
+    <button type="button" class="dp-side-icon" title="Accounting"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 6H9.5a3 3 0 0 0 0 6H14a3 3 0 0 1 0 6H6.5"/></svg></button>
+    <button type="button" class="dp-side-icon" title="Archive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="5" rx="1.2"/><rect x="4.5" y="9" width="15" height="11" rx="1.2"/><path d="M10 13.5h4"/></svg></button>
+    <button type="button" class="dp-side-icon" title="Compliance"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z"/></svg></button>
+    <button type="button" class="dp-side-icon" title="Reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M12 20V4"/><path d="M20 20v-7"/></svg></button>
+    <button type="button" class="dp-side-icon" title="Documents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7Z"/><path d="M14 3v4h4"/><path d="M9.5 12.5h5M9.5 16h5"/></svg></button>
   </nav>
 
   <!-- ── channels column ── -->
@@ -8309,6 +8283,37 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
   setTimeout(() => {
     showReminder("Christian Snead from Dawson Truck Lines (Roanoke, VA) wants to connect on ProChat.");
   }, 4000);
+})();
+
+/* Shared top bar + sidebar behaviour (same as Agent Pay Profile): each topbar
+   icon opens a small popover — the mail one also clears its unread dot — and
+   the sidebar highlights whichever icon was clicked last. */
+(function () {
+  function closeAll() { document.querySelectorAll(".dp-popover").forEach(function (p) { p.remove(); }); }
+  document.querySelectorAll(".dp-icon-btn[data-popover]").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var wasOpen = btn.querySelector(".dp-popover");
+      closeAll();
+      if (wasOpen) return;
+      var pop = document.createElement("div");
+      pop.className = "dp-popover";
+      pop.textContent = btn.dataset.popover;
+      btn.appendChild(pop);
+      var dot = btn.querySelector(".dp-dot");
+      if (dot) dot.remove();
+    });
+  });
+  document.addEventListener("click", closeAll);
+
+  var icons = document.querySelectorAll(".dp-side-icon");
+  icons.forEach(function (icon) {
+    icon.addEventListener("click", function () {
+      icons.forEach(function (i) { i.classList.remove("active"); i.removeAttribute("aria-current"); });
+      icon.classList.add("active");
+      icon.setAttribute("aria-current", "true");
+    });
+  });
 })();
 
 </script>
