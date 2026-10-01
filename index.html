@@ -457,7 +457,7 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 /* Not-pinned rows show the same tilted pin glyph rotated back upright,
    rather than an unrelated arrow — the tilt itself is what "pinned" means,
    same convention Slack/Notion use for their pin icon. */
-.convo__pin--upright svg { transform: rotate(-45deg); transform-origin: 50% 50%; }
+.convo__pin--upright svg { transform: none; }
 
 /* Groups-channel rows get a bordered, actually-clickable pin button (Figma
    1:328216 and its sibling component instances) instead of the plain glyph
@@ -2560,7 +2560,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
           </ul>
 
           <p class="card__loc">
-            <span class="card__locicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="card__locicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/></svg></span>
             <span class="card__loctext"><small>Last location</small><b data-role="card-loc">Roanoke, VA</b></span>
             <button type="button" class="card__locmap" data-action="loc-map">View map</button>
           </p>
@@ -4296,7 +4296,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
        unrelated arrow icon for "recent" rows. */
     const pin = el("span", { className: "convo__pin" + (c.group === "pinned" ? "" : " convo__pin--upright") });
     pin.setAttribute("aria-hidden", "true");
-    pin.append(svg('<path d="M14 3 21 10l-3 1-4 4-1 5-7-7 5-1 4-4 1-3Z"/><path d="M6 18 3 21"/>'));
+    pin.append(svg('<path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>'));
 
     const av = avatar(c.name, 35, c.online);
     av.classList.add("convo__avatar");
@@ -4552,7 +4552,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
   function companyRow(c) {
     const pin = el("span", { className: "convo__pin" + (c.group === "pinned" ? "" : " convo__pin--upright") });
     pin.setAttribute("aria-hidden", "true");
-    pin.append(svg('<path d="M14 3 21 10l-3 1-4 4-1 5-7-7 5-1 4-4 1-3Z"/><path d="M6 18 3 21"/>'));
+    pin.append(svg('<path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>'));
 
     const av = avatar(c.name, 35, true);
     av.classList.add("convo__avatar");
@@ -4649,7 +4649,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
         "aria-pressed": String(r.group === "pinned"),
         "aria-label": r.group === "pinned" ? `Unpin ${r.title}` : `Pin ${r.title}`
       });
-      pin.append(svg('<path d="M14 3 21 10l-3 1-4 4-1 5-7-7 5-1 4-4 1-3Z"/><path d="M6 18 3 21"/>'));
+      pin.append(svg('<path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>'));
       pin.addEventListener("click", (e) => {
         e.stopPropagation();
         r.group = r.group === "pinned" ? "recent" : "pinned";
@@ -4659,7 +4659,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     } else {
       pin = el("span", { className: "convo__pin convo__pin--upright" });
       pin.setAttribute("aria-hidden", "true");
-      pin.append(svg('<path d="M14 3 21 10l-3 1-4 4-1 5-7-7 5-1 4-4 1-3Z"/><path d="M6 18 3 21"/>'));
+      pin.append(svg('<path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>'));
     }
 
     const av = avatar(r.title, 35, true, r.palette);
@@ -5053,7 +5053,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
   function mailInboxRow(m) {
     const pin = el("span", { className: "convo__pin" + (m.group === "pinned" ? "" : " convo__pin--upright") });
     pin.setAttribute("aria-hidden", "true");
-    pin.append(svg('<path d="M14 3 21 10l-3 1-4 4-1 5-7-7 5-1 4-4 1-3Z"/><path d="M6 18 3 21"/>'));
+    pin.append(svg('<path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>'));
 
     const av = avatar(m.name, 35, true, m.palette);
     av.classList.add("convo__avatar");
@@ -6173,7 +6173,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
           el("span", { className: "member__role", textContent: m.role })
         ]),
         el("span", { className: "member__meta" }, [
-          svg('<path d="M14 3 21 10l-3 1-4 4-1 5-7-7 5-1 4-4 1-3Z"/><path d="M6 18 3 21"/>'),
+          svg('<path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/>'),
           el("time", { textContent: m.time })
         ])
       ])));
