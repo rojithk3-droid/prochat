@@ -50,7 +50,7 @@
   --w-rail: 45px;   /* the Agent Pay Profile sidebar: 56.25px declared × its 0.8 zoom */
   --w-channels: 224px;
   --w-inbox: 312px;
-  --w-details: 340px;
+  --w-details: 400px;
 }
 
 /* ---------- reset -------------------------------------------------------- */
@@ -1635,7 +1635,7 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 .details .icon-btn:hover { background: var(--d-blue-bg); color: var(--d-blue); }
 .details__scroll { padding: 12px 12px 24px; scrollbar-width: thin; scrollbar-color: #D1D5DB transparent; }
 
-.details .view { display: flex; flex-direction: column; gap: 10px; animation: dview .26s ease backwards; }
+.details .view { display: flex; flex-direction: column; gap: 6px; animation: dview .26s ease backwards; }
 @keyframes dview { from { opacity: 0; transform: translateY(5px); } }
 
 /* every direct block of a view is a card */
@@ -1913,6 +1913,175 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .details .member:hover .member__name { color: var(--d-blue); }
 .details .member__role, .details .member__meta { font-size: 11px; color: var(--d-muted); }
 .details .member__meta svg { color: var(--d-blue); }
+
+/* ---------- driver panel: hero + collapsible rows ------------------------- */
+.details .card--hero { padding: 22px 14px 18px; gap: 6px; }
+.details .card--hero::before { display: none; }
+.avatar.has-photo::after { content: ""; }
+.details .card--hero .avatar--83 { width: 96px; height: 96px; font-size: 30px; border: 4px solid #fff; box-shadow: 0 0 0 1px var(--d-line); background-size: cover; background-position: center; }
+.details .card--hero .avatar--83.is-online::before { right: 4px; bottom: 4px; }
+.details .card__meta { display: flex; align-items: baseline; gap: 12px; font-size: 12px; line-height: 16px; color: var(--d-body); }
+.details .card--hero .card__role, .details .card--hero .card__role[data-tone] { display: inline; padding: 0; height: auto; border: 0; background: none; color: var(--d-muted); font-size: 10px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.details .card--hero .dchips { margin-top: 2px; }
+.details .card--hero { flex-direction: row; align-items: flex-start; justify-content: center; }
+.hero__col { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; min-width: 0; text-align: center; }
+.hero__col[hidden] { display: none; }
+.card--duo { gap: 0; }
+.card--duo .hero__col + .hero__col { border-left: 1px solid var(--d-soft); }
+.details .card--duo .avatar--83 { width: 72px; height: 72px; font-size: 24px; border-width: 3px; }
+.details .card--duo .avatar--83.is-online::before { right: 1px; bottom: 1px; width: 15px; height: 15px; border-width: 2.5px; }
+.card--duo .card__name { font-size: 13px; }
+.card--duo .card__meta { flex-direction: column; align-items: center; gap: 2px; }
+.card--duo .dchips { gap: 4px; }
+.details .view > .acc { background: #fff; border: 1px solid var(--d-line); border-radius: 10px; }
+.acc__head { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; text-align: left; background: none; border: 0; border-radius: 10px; }
+.acc__head .dhead__icon { width: 32px; height: 32px; padding: 8px; }
+.acc__head .dhead__text h4 { font-size: 13px; line-height: 18px; }
+.acc__chev { width: 14px; height: 14px; flex: 0 0 auto; fill: none; stroke: var(--d-muted); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .18s ease; }
+.acc.is-open .acc__chev { transform: rotate(180deg); }
+.acc__head:hover .dhead__icon, .acc.is-open .dhead__icon { background: var(--d-blue); border-color: var(--d-blue); color: #fff; }
+.details .acc__body { padding: 14px 14px 14px; border-top: 1px solid var(--d-soft); }
+.acc__body[hidden] { display: none; }
+.acc__sub { margin: 12px 0 8px; font-size: 10px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--d-faint); }
+.acc__subhead { display: flex; align-items: center; justify-content: space-between; margin: 12px 0 8px; }
+.acc__subhead:first-child { margin-top: 0; }
+.acc__subhead .acc__sub { margin: 0; }
+.acc__subhead .link { height: 22px; padding: 0 8px; border: 1px solid var(--d-line); border-radius: 6px; font-size: 11px; font-weight: 500; color: var(--d-body); background: #fff; text-decoration: none; }
+.acc__subhead .link:hover { background: var(--d-blue-bg); color: var(--d-blue); border-color: var(--d-blue-bd); }
+.acc__body .cardacts { margin-top: 0; }
+.details .cardacts[hidden] { display: none; }
+.ftabs { margin-bottom: 14px; }
+.fpanel[hidden] { display: none; }
+.fhead { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.fhead .dhead__text { flex: 1; min-width: 0; }
+.fbtn { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 11px; border: 1px solid var(--d-line); border-radius: 8px; background: #fff; font-size: 12px; font-weight: 600; color: var(--d-ink); white-space: nowrap; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.fbtn svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.fbtn:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); color: var(--d-blue); }
+.fgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.fthumb { position: relative; aspect-ratio: 1 / 1.1; overflow: hidden; border-radius: 10px; border: 1px solid var(--d-blue-bd); background: var(--d-blue-bg) url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2399BDF5' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Ccircle cx='9' cy='10' r='1.8'/%3E%3Cpath d='m21 16-5-5-8 9'/%3E%3C/svg%3E") center / 24px no-repeat; }
+.fthumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.flist { display: flex; flex-direction: column; gap: 8px; margin: 0 0 8px; padding: 0; list-style: none; }
+.frow { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 9px 10px; border: 1px solid var(--d-line); border-radius: 10px; transition: background .15s ease, border-color .15s ease; }
+.frow:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
+.frow__type { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: var(--d-blue-bg); border: 1px solid var(--d-blue-bd); font-size: 10px; font-weight: 700; color: var(--d-blue); }
+.frow__body { display: flex; flex-direction: column; min-width: 0; }
+.frow__body b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; line-height: 17px; font-weight: 700; color: var(--d-ink); }
+.frow__body small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; line-height: 15px; color: var(--d-muted); }
+.fbadge { padding: 3px 9px; border-radius: 999px; background: var(--d-green-bg); font-size: 11px; font-weight: 700; color: var(--d-green); }
+.fdash { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; height: 36px; margin-top: 8px; border: 1px dashed #C4CAD4; border-radius: 10px; background: #fff; font-size: 12px; font-weight: 600; color: var(--d-body); transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.fdash:hover { background: var(--d-blue-bg); border-color: var(--d-blue); color: var(--d-blue); }
+.fdash--up { color: var(--d-muted); }
+.fdash svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.acc__bar { display: flex; align-items: center; gap: 8px; padding-right: 14px; }
+.acc__bar .acc__head { flex: 1; min-width: 0; width: auto; }
+.acc__add { display: inline-flex; align-items: center; gap: 5px; height: 28px; padding: 0 10px; border: 1px solid var(--d-line); border-radius: 8px; background: #fff; font-size: 12px; font-weight: 600; color: var(--d-ink); transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.acc__add svg { width: 12px; height: 12px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.acc__add:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); color: var(--d-blue); }
+.mlist { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.mlist li { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--d-line); border-radius: 10px; transition: background .15s ease, border-color .15s ease; }
+.mlist li:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
+.mav { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--bg); color: var(--fg); font-size: 13px; font-weight: 600; }
+.mav i { position: absolute; right: 0; bottom: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--c); border: 2px solid #fff; }
+.mlist__who { display: flex; flex-direction: column; min-width: 0; }
+.mlist__who b { display: flex; align-items: center; gap: 6px; font-size: 13px; line-height: 17px; font-weight: 700; color: var(--d-ink); white-space: nowrap; }
+.mlist__who em { padding: 0 6px; border-radius: 4px; background: var(--d-blue-bg); border: 1px solid var(--d-blue-bd); font-size: 10px; font-style: normal; font-weight: 600; color: var(--d-blue); }
+.mlist__who small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; line-height: 15px; color: var(--d-muted); }
+.mlist__ph { font-size: 11px; color: var(--d-muted); white-space: nowrap; }
+.cfilter { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+.cfilter button { height: 26px; padding: 0 11px; border: 1px solid var(--d-line); border-radius: 999px; background: #fff; font-size: 11px; font-weight: 600; color: var(--d-ink); transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.cfilter button:hover { background: var(--d-blue-bg); }
+.cfilter button[aria-pressed="true"] { background: var(--d-blue-bg); border-color: var(--d-blue-bd); color: var(--d-blue); }
+.ctl { position: relative; display: flex; flex-direction: column; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.ctl::before { content: ""; position: absolute; left: 13px; top: 14px; bottom: 14px; width: 1px; background: var(--d-line); }
+.ctl li { position: relative; display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; }
+.ctl li[hidden] { display: none; }
+.ctl__ic { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 1px solid var(--d-line); color: var(--d-icon); }
+.ctl__ic svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.ctl li[data-tone="blue"] .ctl__ic { color: var(--d-blue); }
+.ctl li[data-tone="purple"] .ctl__ic { color: #7C3AED; }
+.ctl li[data-tone="orange"] .ctl__ic { color: #C2410C; }
+.ctl li[data-tone="red"] .ctl__ic { color: var(--d-red); }
+.ctl li[data-tone="green"] .ctl__ic { color: var(--d-green); }
+.ctl p { margin: 0; font-size: 12px; line-height: 17px; color: var(--d-body); }
+.ctl__head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.ctl__head b { font-size: 13px; font-weight: 700; color: var(--d-ink); }
+.ctl__head time { flex: 0 0 auto; font-size: 11px; color: var(--d-muted); }
+.cmdgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 8px; }
+.cmdgrid button { height: 34px; padding: 0 6px; border: 1px solid var(--d-line); border-radius: 9px; background: #fff; color: var(--d-body); cursor: pointer; font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.cmdgrid button:enabled { background: #fff; color: var(--d-body); cursor: pointer; }
+.cmdgrid button:enabled:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); color: var(--d-blue); }
+.cmdgrid button:disabled { cursor: default; }
+.acc__body .card__loc { margin-top: 0; }
+.acc__body .dslot > .dcard { border: 0; background: none; border-radius: 0; }
+.acc__body .dslot > .dcard > .dhead { display: none; }
+.acc__body .hoscard.is-collapsed .hoscard__body { display: block; }
+.acc__body .dslot .dlist, .acc__body .dslot .hoscard__body { padding: 0; }
+.acc__body .tabs--sub { margin-bottom: 10px; }
+.acc__body > .members { padding: 0; margin: 0; }
+.comlog { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.comlog li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--d-line); border-radius: 8px; }
+.comlog b { display: block; font-size: 12px; font-weight: 600; color: var(--d-ink); }
+.comlog small { font-size: 11px; color: var(--d-muted); }
+.comlog__ic { display: grid; place-items: center; width: 28px; height: 28px; padding: 6px; border-radius: 8px; background: var(--d-blue-bg); border: 1px solid var(--d-blue-bd); color: var(--d-blue); }
+.comlog__ic svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- driver & equipment + hours of service (expanded) --------------- */
+.dequip { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.dtile { position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 0; padding: 12px 10px; background: #fff; border: 1px solid var(--d-line); border-radius: 12px; text-align: left; }
+.dtile--link { cursor: pointer; transition: border-color .15s ease; }
+.dtile--link:hover { border-color: var(--d-blue-bd); }
+.dtile__label { font-size: 11px; line-height: 14px; font-weight: 500; color: var(--d-muted); }
+.dtile__who { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.dtile__who > span { display: flex; flex-direction: column; min-width: 0; }
+.dtile__who .avatar { flex: 0 0 auto; background-size: cover; background-position: center; border-radius: 8px; }
+.dtile__who b { font-size: 13px; line-height: 17px; font-weight: 700; color: var(--d-ink); }
+.dtile__who small { font-size: 11px; line-height: 14px; color: var(--d-muted); }
+.dtile .dbadge { align-self: flex-start; height: 22px; font-size: 11px; letter-spacing: 0; text-transform: none; font-weight: 600; }
+.dtile__drive { margin: 0; font-size: 12px; line-height: 16px; font-weight: 500; color: var(--d-ink); }
+.dtile__acts { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: auto; border: 1px solid var(--d-line); border-radius: 10px; overflow: hidden; }
+.dtile__acts button { display: grid; place-items: center; height: 32px; padding: 0; border: 0; background: #fff; color: var(--d-icon); transition: background .15s ease, color .15s ease; }
+.dtile__acts button + button { border-left: 1px solid var(--d-line); }
+.dtile__acts button:hover { background: var(--d-blue-bg); color: var(--d-blue); }
+.dtile__acts svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.dtile--empty { align-items: center; justify-content: center; gap: 6px; background: var(--d-soft); border-color: var(--d-soft); text-align: center; cursor: pointer; transition: background .15s ease; }
+.dtile--empty:hover { background: var(--d-blue-bg); }
+.dtile--empty .dtile__label { align-self: flex-start; }
+.dtile__add { display: grid; place-items: center; width: 48px; height: 48px; margin-top: 6px; border: 1.5px dashed #C4CAD4; border-radius: 50%; color: var(--d-icon); }
+.dtile__add svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.dtile--empty b { font-size: 13px; font-weight: 700; color: var(--d-ink); }
+.dtile--empty small { font-size: 11px; color: var(--d-muted); }
+.dpick { position: fixed; z-index: 1000; padding: 12px 12px 8px; background: #fff; border: 1px solid #E5E7EB; border-radius: 12px; box-shadow: 0 10px 28px rgba(16, 24, 40, .14); animation: dview .16s ease backwards; }
+.dpick__title { margin: 0 0 6px; font-size: 11px; font-weight: 600; color: #6A7282; }
+.dpick__item { display: flex; align-items: center; gap: 10px; width: 100%; padding: 7px 4px; border: 0; border-radius: 8px; background: none; text-align: left; transition: background .15s ease; }
+.dpick__item:hover { background: #EFF6FF; }
+.dpick__item b { display: block; font-size: 13px; line-height: 17px; font-weight: 700; color: #101828; }
+.dpick__item small { font-size: 11px; line-height: 14px; color: #6A7282; }
+.dpick__av { display: grid; place-items: center; flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; background: #F3F4F6; font-size: 11px; font-weight: 600; color: #364153; }
+.dunit { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 10px; background: #fff; border: 1px solid var(--d-line); border-radius: 12px; text-align: left; transition: border-color .15s ease; }
+.dunit:hover { border-color: var(--d-blue-bd); }
+.dunit__tile { display: grid; place-items: center; flex: 0 0 auto; width: 36px; height: 36px; padding: 9px; border-radius: 10px; background: var(--d-soft); color: var(--d-icon); }
+.dunit__tile--blue { background: var(--d-blue-bg); color: var(--d-blue); }
+.dunit__tile svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.dunit__body { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+.dunit__body small { font-size: 11px; line-height: 14px; color: var(--d-muted); white-space: nowrap; }
+.dunit__val { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.dunit__val > b { font-size: 13px; line-height: 17px; font-weight: 700; color: var(--d-ink); }
+.dunit__temp { height: 18px; padding: 0 5px; font-size: 10px; letter-spacing: 0; text-transform: none; }
+.dunit__temp svg { width: 10px; height: 10px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.acc__body .hos__rings { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.acc__body .hosring__circle { width: 62px; height: 62px; }
+.acc__body .hosring__num { font-size: 13px; font-weight: 600; }
+.acc__body .hosring__label { font-size: 12px; font-weight: 600; color: var(--d-ink); }
+.acc__body .hosring__limit { font-size: 11px; color: var(--d-muted); }
+.acc__body .hos__status .dbadge { height: 24px; font-size: 11px; letter-spacing: 0; text-transform: none; }
+.acc__body .hos__status .dchip { height: 24px; font-size: 11px; }
+.acc__body .hos__live { text-transform: none; letter-spacing: 0; font-size: 11px; }
+.hos__note { padding: 10px 12px; border-radius: 10px; background: var(--d-green-bg); border: 1px solid var(--d-green-bd); }
+.hos__note b { display: flex; align-items: center; gap: 6px; font-size: 12px; line-height: 16px; font-weight: 700; color: var(--d-green); }
+.hos__note b svg { width: 13px; height: 13px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.hos__note p { margin: 3px 0 0 19px; font-size: 12px; line-height: 17px; color: var(--d-green); }
+.hos__note--rest { background: var(--d-soft); border-color: var(--d-line); }
+.hos__note--rest b, .hos__note--rest p { color: var(--d-body); }
 .details .loadmember { padding: 9px 10px; border: 1px solid var(--d-line); border-radius: 8px; transition: background .15s ease, border-color .15s ease; }
 .details .loadmember:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
 .details .loadmember--open { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
@@ -1976,6 +2145,43 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 
+
+/* ============================================================================
+   RIGHT PANEL — the driver panel's style carried to the company, team, email,
+   load and personal-info views. Design only: same markup flow and handlers.
+   Hero card = white, bordered, centred round photo with a ring; section
+   headers = 32px blue icon tile + 13px bold title + chevron; rows = bordered
+   10px cards.
+   ==========================================================================*/
+.details .card:not(.card--hero) { padding: 22px 14px 18px; gap: 6px; }
+.details .card:not(.card--hero)::before { display: none; }
+.details .card:not(.card--hero) .avatar--83 { width: 96px; height: 96px; font-size: 30px; border: 4px solid #fff; box-shadow: 0 0 0 1px var(--d-line); background-size: cover; background-position: center; }
+.details .card:not(.card--hero) .avatar--83.is-online::before { right: 4px; bottom: 4px; }
+.details .card:not(.card--hero) .card__name { font-size: 15px; font-weight: 700; }
+.details .card:not(.card--hero) .card__role { font-size: 12px; font-weight: 500; color: var(--d-muted); }
+.details .card:not(.card--hero) .card__role--mail { color: var(--d-blue); }
+.details .card:not(.card--hero) .card__role[data-tone] { height: auto; padding: 0; border: 0; background: none; font-size: 12px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--d-muted); }
+.details .card:not(.card--hero) .cardacts { margin-top: 10px; }
+
+.details .view > .teamdetails { border: 1px solid var(--d-line); }
+.details .teamdetails__toggle { gap: 12px; padding: 12px 14px; font-size: 13px; font-weight: 700; text-align: left; }
+.details .teamdetails__toggle .dhead__icon { width: 32px; height: 32px; padding: 8px; }
+.details .teamdetails__toggle:hover .dhead__icon, .details .teamdetails__toggle[aria-expanded="true"] .dhead__icon { background: var(--d-blue); border-color: var(--d-blue); color: #fff; }
+.teamdetails__title { flex: 1; min-width: 0; }
+.details .teamdetails__chevron { width: 14px; height: 14px; }
+.details .teamdetails__toggle[aria-expanded="true"] .teamdetails__chevron { transform: rotate(180deg); }
+.details .teamdetails__toggle[aria-expanded="false"] .teamdetails__chevron { transform: none; }
+.details .teamdetails__body { padding: 14px; border-top: 1px solid var(--d-soft); }
+
+.details .assets__head { padding: 12px 14px; }
+.details .assets__head .dhead__icon { width: 32px; height: 32px; padding: 8px; }
+.details .assets__head .dhead__text h4 { font-size: 13px; font-weight: 700; }
+.details .assets > ul { padding: 14px; }
+
+.details .view > .tabs--sub, .details .view > .form { border-radius: 10px; }
+.details .loadmember, .details .teammember, .details .coload, .details .member { border-radius: 10px; }
+.details .view > .kv--stacked, .details .view > .rating { border-radius: 10px; }
+.details .btn--primary { border-radius: 8px; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -2514,12 +2720,13 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
         <section class="teamdetails">
           <h4 class="teamdetails__head">
-            <button type="button" class="teamdetails__toggle" aria-expanded="true" aria-controls="team-details-body">
-              Team Details
+            <button type="button" class="teamdetails__toggle" aria-expanded="false" aria-controls="team-details-body">
+              <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
+              <span class="teamdetails__title">Team Details</span>
               <svg class="teamdetails__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
             </button>
           </h4>
-          <div class="teamdetails__body" id="team-details-body">
+          <div class="teamdetails__body" id="team-details-body" hidden>
             <h5 class="teamdetails__label">Members</h5>
             <ul class="teammembers" role="list" data-role="team-members"></ul>
             <!-- Groups channel only — the Teams details panel has no such
@@ -2529,81 +2736,207 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
         </section>
       </section>
 
-      <!-- view: details ------------------------------------------------ -->
+      <!-- view: details ------------------------------------------------
+           Driver panel: a photo hero card, then seven collapsible rows
+           (Command Center, Communication History, Last Location, Hours of
+           Service, Driver & equipment, Load Details, Files & Images). -->
       <section class="view" data-view="details">
-        <div class="card">
-          <span class="avatar avatar--83" data-role="card-avatar" data-initials="MS" aria-hidden="true"></span>
-          <h3 class="card__name">
-            <span data-role="card-name">Micheal Scott</span>
-            <svg class="verified" viewBox="0 0 16 16" aria-label="Verified"><circle cx="8" cy="8" r="8" fill="currentColor" stroke="none"/><path d="m4.6 8.2 2.2 2.2 4.6-4.6" stroke="#fff" stroke-width="1.7" fill="none"/></svg>
-          </h3>
-          <p class="card__role" data-role="card-role" data-tone="blue">Driver</p>
-          <div class="dchips" data-role="card-chips"></div>
-
-          <ul class="cardacts" role="list">
-            <li><button type="button" data-action="open-hos"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>HOS</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
-            <li class="cardacts__more">
-              <button type="button" data-action="more" aria-haspopup="menu" aria-expanded="false" aria-controls="more-menu">
-                <span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More
-              </button>
-              <ul class="menu" id="more-menu" role="menu" hidden>
-                <li role="none"><button role="menuitem" type="button" data-goto="share-tracking">Share Tracking</button></li>
-                <li role="none"><button role="menuitem" type="button" data-goto="request-document">Send/Request Document</button></li>
-                <li role="none"><button role="menuitem" type="button" data-goto="request-location">Request Location Update</button></li>
-                <li role="none"><button role="menuitem" type="button" data-goto="personal-info">Personal Info</button></li>
-                <li role="none"><button role="menuitem" type="button" data-goto="show-map">Show Map</button></li>
-              </ul>
-            </li>
-          </ul>
-
-          <p class="card__loc">
-            <span class="card__locicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/></svg></span>
-            <span class="card__loctext"><small>Last location</small><b data-role="card-loc">Roanoke, VA</b></span>
-            <button type="button" class="card__locmap" data-action="loc-map">View map</button>
-          </p>
+        <div class="card card--hero">
+          <div class="hero__col">
+            <span class="avatar avatar--83" data-role="card-avatar" data-initials="MS" aria-hidden="true"></span>
+            <h3 class="card__name">
+              <span data-role="card-name">Micheal Scott</span>
+              <svg class="verified" viewBox="0 0 16 16" aria-label="Verified"><circle cx="8" cy="8" r="8" fill="currentColor" stroke="none"/><path d="m4.6 8.2 2.2 2.2 4.6-4.6" stroke="#fff" stroke-width="1.7" fill="none"/></svg>
+            </h3>
+            <p class="card__meta"><span class="card__role" data-role="card-role">Driver</span><span data-role="card-org">Dawson truck lines</span></p>
+            <div class="dchips" data-role="card-chips"></div>
+          </div>
+          <!-- Shown once a co-driver is added: their profile sits beside the driver's. -->
+          <div class="hero__col hero__co" data-role="hero-co" hidden>
+            <span class="avatar avatar--83" data-role="co-hero-avatar" data-initials="PD" aria-hidden="true"></span>
+            <h3 class="card__name">
+              <span data-role="co-hero-name">Philip Dunphy</span>
+              <svg class="verified" viewBox="0 0 16 16" aria-label="Verified"><circle cx="8" cy="8" r="8" fill="currentColor" stroke="none"/><path d="m4.6 8.2 2.2 2.2 4.6-4.6" stroke="#fff" stroke-width="1.7" fill="none"/></svg>
+            </h3>
+            <p class="card__meta"><span class="card__role" data-role="co-hero-role">Co-Driver</span><span data-role="co-hero-org"></span></p>
+            <div class="dchips" data-role="co-hero-chips"></div>
+          </div>
         </div>
 
-        <!-- Driver &amp; equipment (driver, co-driver, truck, trailer) and the
-             Hours of service card are drawn by renderDriverCards() for driver
-             roles only. -->
-        <div class="dslot" data-role="equip-slot" hidden></div>
-        <div class="dslot" data-role="hos-slot" hidden></div>
-
-        <div class="tabs tabs--sub" role="tablist" aria-label="Load history">
-          <button type="button" class="tabs__tab" role="tab" id="lt-current"  aria-selected="true"  aria-controls="load-panel" data-load="current">Current Load</button>
-          <button type="button" class="tabs__tab" role="tab" id="lt-upcoming" aria-selected="false" aria-controls="load-panel" data-load="upcoming">Upcoming Load</button>
-          <button type="button" class="tabs__tab" role="tab" id="lt-historic" aria-selected="false" aria-controls="load-panel" data-load="historic">Historic Load</button>
-        </div>
-
-        <div class="loadpanel" id="load-panel" role="tabpanel" aria-labelledby="lt-current" tabindex="0" data-role="load-panel"></div>
-
-        <section class="assets">
-          <header class="assets__head">
-            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 9"/></svg></span>
-            <div class="dhead__text"><h4>Images</h4><p>Photos shared in this chat</p></div>
-            <button type="button" class="link" data-action="toggle-images" aria-expanded="false">View All</button>
-          </header>
-          <ul class="thumbs" role="list" data-role="images"></ul>
+        <section class="acc" data-acc="command">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-command">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="dhead__text"><h4>Command Center</h4><p>Load actions</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-command" hidden>
+            <div class="cmdgrid">
+              <button type="button" data-cmd>Edit load</button>
+              <button type="button" data-cmd>Request check call</button>
+              <button type="button" data-cmd>Track and trace</button>
+              <button type="button" data-cmd>Repower options</button>
+              <button type="button" data-cmd>Issue funds</button>
+              <button type="button" data-cmd>BOL generator</button>
+              <button type="button" data-cmd>Invoice / payments</button>
+              <button type="button" data-cmd>Resend to driver</button>
+              <button type="button" data-cmd>Copy load</button>
+              <button type="button" data-cmd>Toll / fuel data</button>
+              <button type="button" data-cmd>OS&amp;D</button>
+              <button type="button" data-cmd>Post to loadboard</button>
+            </div>
+            <!-- Contact quick actions: kept (the scripts bind to them) but not shown in this layout. -->
+            <ul class="cardacts" role="list" hidden>
+              <li><button type="button" data-action="open-hos"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>HOS</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
+              <li class="cardacts__more">
+                <button type="button" data-action="more" aria-haspopup="menu" aria-expanded="false" aria-controls="more-menu">
+                  <span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More
+                </button>
+                <ul class="menu" id="more-menu" role="menu" hidden>
+                  <li role="none"><button role="menuitem" type="button" data-goto="share-tracking">Share Tracking</button></li>
+                  <li role="none"><button role="menuitem" type="button" data-goto="request-document">Send/Request Document</button></li>
+                  <li role="none"><button role="menuitem" type="button" data-goto="request-location">Request Location Update</button></li>
+                  <li role="none"><button role="menuitem" type="button" data-goto="personal-info">Personal Info</button></li>
+                  <li role="none"><button role="menuitem" type="button" data-goto="show-map">Show Map</button></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </section>
 
-        <section class="assets">
-          <header class="assets__head">
+        <section class="acc" data-acc="comms">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-comms">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></span>
+            <span class="dhead__text"><h4>Communication history</h4><p>Calls, messages, documents and check calls</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-comms" hidden>
+            <div class="cfilter" role="group" aria-label="Filter communication">
+              <button type="button" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" data-filter="msg" aria-pressed="false">Messages</button>
+              <button type="button" data-filter="call" aria-pressed="false">Calls</button>
+              <button type="button" data-filter="doc" aria-pressed="false">Docs</button>
+              <button type="button" data-filter="check" aria-pressed="false">Check calls</button>
+            </div>
+            <ol class="ctl" role="list">
+              <li data-type="msg" data-tone="blue"><span class="ctl__ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></span><div><p class="ctl__head"><b>Micheal Scott</b><time>1:08 PM</time></p><p>Rolling out of Beckley, 8 pallets off. Heading to Columbus.</p></div></li>
+              <li data-type="doc" data-tone="purple"><span class="ctl__ic"><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span><div><p class="ctl__head"><b>Document received</b><time>1:09 PM</time></p><p>Delivery receipt · Beckley (2 pages) from the driver app</p></div></li>
+              <li data-type="check" data-tone="orange"><span class="ctl__ic"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><p class="ctl__head"><b>Departed stop 2</b><time>1:05 PM</time></p><p>Food Lion DC, Beckley, WV · geofence exit</p></div></li>
+              <li data-type="all" data-tone="red"><span class="ctl__ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 9v4l2 2M10 3h4"/></svg></span><div><p class="ctl__head"><b>Detention started</b><time>12:00 PM</time></p><p>Free time ended at Food Lion DC (2h from 10:00 AM appointment)</p></div></li>
+              <li data-type="call" data-tone="green"><span class="ctl__ic"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span><div><p class="ctl__head"><b>Outbound call · 4m 12s</b><time>11:05 AM</time></p><p>Lacy Harris → Micheal Scott · confirmed dock 18 at Kroger</p></div></li>
+              <li data-type="check" data-tone="orange"><span class="ctl__ic"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div><p class="ctl__head"><b>Arrived stop 2</b><time>9:48 AM</time></p><p>Food Lion DC, Beckley, WV · geofence entry · 12 min early</p></div></li>
+              <li data-type="msg" data-tone="blue"><span class="ctl__ic"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg></span><div><p class="ctl__head"><b>Jordan Pike · Summit Freight</b><time>9:20 AM</time></p><p>Receiver confirmed the 5–7 PM window for Columbus.</p></div></li>
+              <li data-type="all" data-tone="slate"><span class="ctl__ic"><svg viewBox="0 0 24 24"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg></span><div><p class="ctl__head"><b>Status changed</b><time>7:24 AM</time></p><p>Loaded → In transit (auto from ELD)</p></div></li>
+            </ol>
+            <ul class="members" role="list" data-role="members" hidden></ul>
+          </div>
+        </section>
+
+        <section class="acc" data-acc="location">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-location">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="dhead__text"><h4>Last Location</h4><p>Most recent ELD ping</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-location" hidden>
+            <p class="card__loc">
+              <span class="card__locicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11ZM12 7.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5Z"/></svg></span>
+              <span class="card__loctext"><small>Last location</small><b data-role="card-loc">Roanoke, VA</b></span>
+              <button type="button" class="card__locmap" data-action="loc-map">View map</button>
+            </p>
+          </div>
+        </section>
+
+        <section class="acc" data-acc="hos" hidden>
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-hos">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <span class="dhead__text"><h4>Hours of Service</h4><p>Live from the ELD</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-hos" hidden>
+            <div class="dslot" data-role="hos-slot"></div>
+          </div>
+        </section>
+
+        <section class="acc" data-acc="equip" hidden>
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-equip">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg></span>
+            <span class="dhead__text"><h4>Driver &amp; equipment</h4><p>Who is on the truck right now</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-equip" hidden>
+            <div class="dslot" data-role="equip-slot"></div>
+          </div>
+        </section>
+
+        <section class="acc" data-acc="load">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-load">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5h8v2"/></svg></span>
+            <span class="dhead__text"><h4>Load Details</h4><p>Current, upcoming and historic</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-load" hidden>
+            <div class="tabs tabs--sub" role="tablist" aria-label="Load history">
+              <button type="button" class="tabs__tab" role="tab" id="lt-current"  aria-selected="true"  aria-controls="load-panel" data-load="current">Current Load</button>
+              <button type="button" class="tabs__tab" role="tab" id="lt-upcoming" aria-selected="false" aria-controls="load-panel" data-load="upcoming">Upcoming Load</button>
+              <button type="button" class="tabs__tab" role="tab" id="lt-historic" aria-selected="false" aria-controls="load-panel" data-load="historic">Historic Load</button>
+            </div>
+            <div class="loadpanel" id="load-panel" role="tabpanel" aria-labelledby="lt-current" tabindex="0" data-role="load-panel"></div>
+          </div>
+        </section>
+
+        <section class="acc" data-acc="files">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-files">
             <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>
-            <div class="dhead__text"><h4>Files</h4><p>Documents and attachments</p></div>
-            <button type="button" class="link" data-action="toggle-files" aria-expanded="false">View All</button>
-          </header>
-          <ul class="files" role="list" data-role="files"></ul>
+            <span class="dhead__text"><h4>Files &amp; Images</h4><p>Shared in this chat</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-files" hidden>
+            <div class="dseg ftabs" role="tablist" aria-label="Files and images">
+              <button type="button" role="tab" data-ftab="images" aria-pressed="true">Images</button>
+              <button type="button" role="tab" data-ftab="files" aria-pressed="false">Files</button>
+            </div>
+            <div class="fpanel" data-fpanel="images">
+              <header class="fhead">
+                <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m21 16-5-5-8 9"/></svg></span>
+                <span class="dhead__text"><h4>Images</h4><p>Photos shared in this chat</p></span>
+                <button type="button" class="fbtn" data-action="toggle-images" aria-expanded="false">View All</button>
+              </header>
+              <ul class="fgrid" role="list" data-role="images"></ul>
+            </div>
+            <div class="fpanel" data-fpanel="files" hidden>
+              <header class="fhead">
+                <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+                <span class="dhead__text"><h4>Files</h4><p>Documents and attachments</p></span>
+                <button type="button" class="fbtn" data-action="request-file">Request <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></button>
+              </header>
+              <ul class="flist" role="list" data-role="files"></ul>
+              <button type="button" class="fdash" data-action="toggle-files" aria-expanded="false">Show all files</button>
+              <button type="button" class="fdash fdash--up" data-action="upload-file"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V5M7.5 9.5 12 5l4.5 4.5M5 19h14"/></svg>Upload file</button>
+            </div>
+          </div>
         </section>
 
-        <section class="assets">
-          <header class="assets__head">
-            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
-            <div class="dhead__text"><h4>Members</h4><p>Everyone on this conversation</p></div>
-          </header>
-          <ul class="members" role="list" data-role="members"></ul>
+        <section class="acc" data-acc="members">
+          <div class="acc__bar">
+            <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-members">
+              <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
+              <span class="dhead__text"><h4>Members</h4><p>Everyone on this conversation and load</p></span>
+            </button>
+            <button type="button" class="acc__add" data-action="add-member"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add</button>
+          </div>
+          <div class="acc__body" id="acc-members" hidden>
+            <ul class="mlist" role="list">
+              <li><span class="mav" style="--bg:#DBE7FF;--fg:#1D4ED8">LH<i style="--c:#12B76A"></i></span><span class="mlist__who"><b>Lacy Harris <em>You</em></b><small>Dispatcher · Dawson Truck Lines</small></span><span class="mlist__ph">(540) 555-0101</span></li>
+              <li><span class="mav" style="--bg:#FFE4CF;--fg:#C2410C">MD<i style="--c:#12B76A"></i></span><span class="mlist__who"><b>Micheal Dudley</b><small>Load planner · Dawson Truck Li…</small></span><span class="mlist__ph">(540) 555-0117</span></li>
+              <li><span class="mav" style="--bg:#DDF5E8;--fg:#047857">JP<i style="--c:#F59E0B"></i></span><span class="mlist__who"><b>Jordan Pike</b><small>Broker rep · Summit Freight</small></span><span class="mlist__ph">(704) 555-0172</span></li>
+              <li><span class="mav" style="--bg:#EDE9FE;--fg:#6D28D9">DO</span><span class="mlist__who"><b>Dana Ortiz</b><small>Shipper · Blue Ridge Foods</small></span><span class="mlist__ph">(540) 555-0130</span></li>
+              <li><span class="mav" style="--bg:#EEF0F4;--fg:#4A5468">KR</span><span class="mlist__who"><b>Receiving desk</b><small>Receiver · Kroger DC Columbus</small></span><span class="mlist__ph">(614) 555-0190</span></li>
+              <li><span class="mav" style="--bg:#FCE4EC;--fg:#BE185D">CS<i style="--c:#12B76A"></i></span><span class="mlist__who"><b>Christian Snead</b><small>After-hours dispatch</small></span><span class="mlist__ph">(540) 555-0122</span></li>
+            </ul>
+          </div>
         </section>
       </section>
 
@@ -2638,12 +2971,13 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
         <section class="teamdetails">
           <h4 class="teamdetails__head">
-            <button type="button" class="teamdetails__toggle" aria-expanded="true" aria-controls="mail-company-body">
-              Company Details
+            <button type="button" class="teamdetails__toggle" aria-expanded="false" aria-controls="mail-company-body">
+              <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></span>
+              <span class="teamdetails__title">Company Details</span>
               <svg class="teamdetails__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
             </button>
           </h4>
-          <div class="teamdetails__body" id="mail-company-body">
+          <div class="teamdetails__body" id="mail-company-body" hidden>
             <dl class="kv kv--stacked" data-role="mc-fields"></dl>
             <div class="mailreviews">
               <p class="mailreviews__count" data-role="mc-reviews">715 Reviews</p>
@@ -2679,7 +3013,10 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
         <div class="loadpanel" data-role="ld-panel"></div>
 
         <section class="assets" data-role="ld-members-wrap" hidden>
-          <header class="assets__head"><h4>Members</h4></header>
+          <header class="assets__head">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
+            <div class="dhead__text"><h4>Members</h4><p>Everyone on this load</p></div>
+          </header>
           <ul class="members" role="list" data-role="ld-members"></ul>
         </section>
       </section>
@@ -3956,10 +4293,12 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     { kind: "teal", src: IMG_TEAL }, { kind: "violet", src: IMG_VIOLET }
   ];
   const FILES = [
-    { name:"642 TB-DSHN_0001.PDF", size:"3.58 MB", date:"12 Nov 2025" },
-    { name:"642 TB-DSHN_0001.PDF", size:"3.58 MB", date:"12 Nov 2025" },
-    { name:"Rate confirmation.PDF", size:"1.12 MB", date:"09 Nov 2025" },
-    { name:"Signed BOL.PDF",        size:"842 KB",  date:"04 Nov 2025" }
+    { name:"Rate confirmation",          meta:"Summit Freight · signed Jul 30", status:"Signed" },
+    { name:"Bill of lading · Salem",     meta:"From Micheal · 7:30 AM · 2 pages", status:"Received" },
+    { name:"Delivery receipt · Beckley", meta:"From Micheal · 1:09 PM", status:"Received" },
+    { name:"Lumper receipt · Beckley",   meta:"Comchek CK-77120 · 1:10 PM", status:"Received" },
+    { name:"Proof of delivery · Salem",  meta:"From Micheal · 8:02 AM", status:"Received" },
+    { name:"Detention form",             meta:"Food Lion DC · 12:15 PM", status:"Received" }
   ];
   const ROOM_MEMBERS = [
     { name:"Dwight Schrute", role:"Driver",       time:"01:20 PM" },
@@ -4091,15 +4430,16 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
      computed from the time values. */
   const HOS = {
     dutyCode: "D", duty: "Driving",
-    cycleShort: "7h/80h", availTomorrow: "73:23 h",
+    availTomorrow: "31h 45m",
+    note: { tone: "ok", title: "Can deliver on time", text: "Needs about 2h 50m of drive to Columbus. 7h 30m drive left, shift ends 7:24 PM." },
     /* `limit` is the FMCSA allowance each clock counts down from, so the ring
        fill is value ÷ limit and its colour (green / amber / red) follows how
        much is left. The values themselves are the captured ones. */
     rings: [
-      { label: "Until Break", value: "2:17",  limit: "8:00"  },
-      { label: "Drive",       value: "6:17",  limit: "11:00" },
-      { label: "Shift",       value: "10:17", limit: "14:00" },
-      { label: "Cycle",       value: "73:23", limit: "80:00" }
+      { label: "Until break", value: "6:55",  limit: "8:00"  },
+      { label: "Drive",       value: "7:30",  limit: "11:00" },
+      { label: "Shift",       value: "5:14",  limit: "14:00" },
+      { label: "Cycle",       value: "38:15", limit: "70:00" }
     ],
     /* Today's duty log, hour-of-day (0–24): OFF / SB sleeper / D driving /
        ON on-duty not driving. `now` is the live-marker position. */
@@ -4117,12 +4457,13 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     michael: HOS,
     philip: {
       dutyCode: "SB", duty: "Sleeper berth",
-      cycleShort: "12h/80h", availTomorrow: "68:10 h",
+      availTomorrow: "62h 30m",
+      note: { tone: "rest", title: "Resting in the sleeper berth", text: "Clocks are paused. The next drive window opens once the 10-hour reset completes." },
       rings: [
-        { label: "Until Break", value: "8:00",  limit: "8:00"  },
+        { label: "Until break", value: "8:00",  limit: "8:00"  },
         { label: "Drive",       value: "9:40",  limit: "11:00" },
         { label: "Shift",       value: "13:05", limit: "14:00" },
-        { label: "Cycle",       value: "68:10", limit: "80:00" }
+        { label: "Cycle",       value: "62:10", limit: "70:00" }
       ],
       log: [
         { t: "OFF", s: 0, e: 5 }, { t: "ON", s: 5, e: 7.4 }, { t: "D", s: 7.4, e: 8.7 }, { t: "SB", s: 8.7, e: 12.7 }
@@ -4130,8 +4471,8 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
       now: 12.7
     }
   };
-  const TEAM_PAIRS = { michael: "philip", philip: "michael" };   // driver ↔ co-driver on one truck
-  const EQUIPMENT = { truck: "DTL88", trailer: "V305" };
+  const TEAM_PAIRS = {};   // driver ↔ co-driver on one truck, e.g. { michael: "philip", philip: "michael" }
+  const EQUIPMENT = { truck: "DTL-2147", trailer: "V305", temp: "35.1°F" };
   const ROLE_TONE = { "Driver": "blue", "Co-Driver": "amber", "Dispatcher": "green" };
   const isDriverRole = (r) => r === "Driver" || r === "Co-Driver";
 
@@ -5835,6 +6176,10 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
       || (state.tab === "company" && !state.openCompanyId && !state.companyChatId)
       || (inTeams && !state.openTeamId && !isChannelChat);
     const isRoomOpen = !isThread && !isInvites && !isEmpty && !inCompany && !inTeams && !!state.openRoomId;
+    /* The Members row only belongs to group conversations: Teams, Loads and
+       Groups (their channels and the matching tabs) — never a 1:1 thread. */
+    const membersAcc = $('[data-acc="members"]');
+    if (membersAcc) membersAcc.hidden = !(inTeams || inLoads || ["teams", "loads", "groups"].includes(state.tab));
 
     mainHead.hidden = isInvites || isEmpty;
     /* The Figma SMS frames never show the All/Direct/Teams/Loads/Groups row,
@@ -6138,31 +6483,25 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
   function renderAssets() {
     const imgs = state.showAllImages ? IMAGES : IMAGES.slice(0, 4);
     $('[data-role="images"]').replaceChildren(...imgs.map((img, i) =>
-      el("li", {}, el("img", {
-        className: `thumb thumb--${img.kind}`, src: img.src, alt: `Attachment ${i + 1}`, loading: "lazy",
-        /* The Figma-hosted photo links expire — fall back to a neutral tile. */
-        onerror() {
-          this.onerror = null;
-          this.src = "data:image/svg+xml;utf8," + encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 66 64"><rect width="66" height="64" fill="#EFF6FF"/>' +
-            '<g fill="none" stroke="#0F6FFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".7">' +
-            '<rect x="19" y="20" width="28" height="24" rx="3"/><circle cx="28" cy="29" r="2.5"/><path d="m47 40-8-8-14 12"/></g></svg>');
-        }
+      el("li", { className: "fthumb" }, el("img", {
+        src: img.src, alt: `Attachment ${i + 1}`, loading: "lazy",
+        /* The Figma-hosted photo links expire — the tile's own image icon shows instead. */
+        onerror() { this.remove(); }
       }))));
     $('[data-action="toggle-images"]').textContent = state.showAllImages ? "View Less" : "View All";
     $('[data-action="toggle-images"]').setAttribute("aria-expanded", String(state.showAllImages));
 
-    const files = state.showAllFiles ? FILES : FILES.slice(0, 2);
+    const files = state.showAllFiles ? FILES : FILES.slice(0, 4);
     $('[data-role="files"]').replaceChildren(...files.map((f) =>
-      el("li", { className: "file" }, [
-        el("span", { className: "file__type", textContent: "PDF" }),
-        el("span", { className: "file__body" }, [
-          el("span", { className: "file__name", textContent: f.name }),
-          el("span", { className: "file__size", textContent: f.size })
+      el("li", { className: "frow" }, [
+        el("span", { className: "frow__type", textContent: "PDF" }),
+        el("span", { className: "frow__body" }, [
+          el("b", { textContent: f.name }),
+          el("small", { textContent: f.meta })
         ]),
-        el("time", { className: "file__date", textContent: f.date })
+        el("span", { className: "fbadge", textContent: f.status })
       ])));
-    $('[data-action="toggle-files"]').textContent = state.showAllFiles ? "View Less" : "View All";
+    $('[data-action="toggle-files"]').textContent = state.showAllFiles ? "Show fewer" : `Show all ${FILES.length} files`;
     $('[data-action="toggle-files"]').setAttribute("aria-expanded", String(state.showAllFiles));
 
     $('[data-role="members"]').replaceChildren(...ROOM_MEMBERS.map((m) =>
@@ -6179,6 +6518,8 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
       ])));
   }
 
+  const AVATAR_PHOTOS = { michael: "assets/avatar-michael.png", alicia: "assets/avatar-alicia.png", darryl: "assets/avatar-darryl.png", kevin: "assets/avatar-kevin.png" };
+
   function renderCard() {
     const peer = CONVERSATIONS.find((c) => c.id === state.activeId);
     if (!peer) return;
@@ -6189,16 +6530,16 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     roleEl.textContent = peer.role;
     roleEl.dataset.tone = ROLE_TONE[peer.role] || "slate";
     $('[data-role="card-loc"]').textContent  = peer.loc;
+    $('[data-role="card-org"]').textContent  = peer.org || "";
     av.classList.toggle("is-online", !!peer.online);
+    const photo = AVATAR_PHOTOS[peer.name.split(" ")[0].toLowerCase().replace(/^micheal$/, "michael")];
+    setPhoto(av, photo);
 
     const chip = (iconPaths, text, cls = "") => el("span", { className: "dchip " + cls }, [
       iconPaths ? svg(iconPaths) : el("span", { className: "dchip__dot" }), text
     ]);
     $('[data-role="card-chips"]').replaceChildren(
-      chip(null, peer.online ? "Online" : "Offline", peer.online ? "dchip--on" : ""),
-      chip('<path d="M5 12a7 7 0 0 1 14 0"/><path d="M8.5 12a3.5 3.5 0 0 1 7 0"/><circle cx="12" cy="12" r="1" fill="currentColor" stroke="none"/><path d="M12 13v7"/>',
-           peer.source === "Samsara" ? "Samsara ELD" : peer.source),
-      chip('<path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/>', peer.org)
+      chip('<path d="M3 12h4l3-8 4 16 3-8h4"/>', peer.source === "Samsara" ? "Samsara ELD" : peer.source)
     );
     renderDriverCards(peer);
   }
@@ -6208,93 +6549,176 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
      Only driver roles get them; a dispatcher or biller has no truck. A driver
      on a team shows the co-driver as a row you can click to jump to their
      chat, and the HOS card gains a Driver / Co-driver switch. */
-  function driverRow(label, convo, isCurrent) {
-    const duty = (HOS_BY[convo.id] || HOS);
-    const body = [
-      avatar(convo.name, 35, convo.online),
-      el("span", { className: "drow__body" }, [
-        el("span", { className: "drow__label", textContent: label }),
-        el("span", { className: "drow__value", textContent: convo.name }),
-        el("span", { className: "drow__sub", textContent: convo.loc })
-      ]),
-      el("span", { className: "drow__end" }, [
-        el("span", { className: "dbadge dbadge--" + (duty.dutyCode === "D" ? "blue" : "slate") }, [
-          el("b", { textContent: duty.dutyCode }), duty.duty
-        ])
-      ])
-    ];
-    if (isCurrent) return el("div", { className: "drow", "aria-current": "true" }, body);
-    const btn = el("button", { type: "button", className: "drow", title: `Open chat with ${convo.name}` }, body);
-    btn.addEventListener("click", () => selectConversation(convo.id));
-    return btn;
+  /* The shorthand paintAvatar() writes resets size/position, so a photo has to
+     restate them or it renders at its natural size, tiled and cut off. */
+  function setPhoto(av, photo) {
+    av.classList.toggle("has-photo", !!photo);
+    av.style.backgroundImage = photo ? `url("${photo}")` : "";
+    av.style.backgroundSize = photo ? "cover" : "";
+    av.style.backgroundPosition = photo ? "center" : "";
+    av.style.backgroundRepeat = photo ? "no-repeat" : "";
   }
 
-  function unitRow(label, value, pathD) {
-    const copy = el("span", { className: "drow__copy", "aria-hidden": "true" },
-      svg('<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/>'));
-    const btn = el("button", { type: "button", className: "drow", title: `Copy ${label.toLowerCase()} number` }, [
-      el("span", { className: "drow__tile" }, svg(pathD)),
-      el("span", { className: "drow__body" }, [
-        el("span", { className: "drow__label", textContent: label }),
-        el("span", { className: "drow__value", textContent: value })
+  function photoOf(name) {
+    return AVATAR_PHOTOS[name.split(" ")[0].toLowerCase().replace(/^micheal$/, "michael")];
+  }
+
+  /* One driver tile: avatar + name + last location, duty badge, drive time left
+     and call / chat / email. A tile for a different person opens their chat. */
+  function driverTile(label, convo, isCurrent) {
+    const duty = HOS_BY[convo.id] || HOS;
+    const av = avatar(convo.name, 40, convo.online);
+    const photo = photoOf(convo.name);
+    setPhoto(av, photo);
+    const act = (title, d) => {
+      const b = el("button", { type: "button", title: `${title} ${convo.name}` }, svg(d));
+      b.addEventListener("click", () => toast(`${title} ${convo.name}`));
+      return b;
+    };
+    const tile = el("div", { className: "dtile" }, [
+      el("span", { className: "dtile__label", textContent: label }),
+      el("div", { className: "dtile__who" }, [
+        av,
+        el("span", {}, [el("b", { textContent: convo.name }), el("small", { textContent: convo.loc })])
+      ]),
+      el("span", { className: "dbadge dbadge--" + (HOS_BADGE[duty.dutyCode] || "slate") }, [el("b", { textContent: duty.dutyCode }), duty.duty]),
+      el("p", { className: "dtile__drive", textContent: hosHM(hosMins(duty.rings[1].value)).replace(/ 0(\d)m/, " $1m") + " drive" }),
+      el("div", { className: "dtile__acts" }, [
+        act("Call", '<path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/>'),
+        act("SMS", '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M10.5 9h3M10.5 12h3"/><path d="M11 18h2"/>'),
+        act("Prochat", '<path d="M4 5h16v11H9l-5 4z"/>'),
+        act("Email", '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>')
       ])
     ]);
-    btn.append(copy);
-    btn.style.gridTemplateColumns = "34px minmax(0,1fr) auto";
-    btn.addEventListener("click", () => {
+    if (!isCurrent) {
+      tile.classList.add("dtile--link");
+      tile.title = `Open chat with ${convo.name}`;
+      tile.addEventListener("click", (e) => { if (!e.target.closest(".dtile__acts")) selectConversation(convo.id); });
+    }
+    return tile;
+  }
+
+  const COPILOTS = [
+    { id: "philip", name: "Philip Dunphy", loc: "Fresno, CA" },
+    { id: "dwight", name: "Dwight Schrute", loc: "Scranton, PA" },
+    { id: "jim", name: "Jim Halpert", loc: "Scranton, PA" }
+  ];
+
+  /* "Add co-driver" opens a list of available drivers; picking one pairs them
+     with this truck and redraws the equipment + hours cards. */
+  function openCopilotMenu(tile, peer) {
+    const host = tile.parentElement;
+    let scroller = null;
+    const existing = document.querySelector(".dpick");
+    if (existing) { existing.remove(); return; }
+    const close = () => { pop.remove(); scroller && scroller.removeEventListener("scroll", close); document.removeEventListener("click", away, true); document.removeEventListener("keydown", esc); };
+    const away = (e) => { if (!pop.contains(e.target) && !tile.contains(e.target)) close(); };
+    const esc = (e) => { if (e.key === "Escape") close(); };
+    const pop = el("div", { className: "dpick", role: "menu", "aria-label": "Available drivers" }, [
+      el("p", { className: "dpick__title", textContent: "Available drivers" }),
+      ...COPILOTS.map((d) => {
+        const b = el("button", { type: "button", role: "menuitem", className: "dpick__item" }, [
+          el("span", { className: "dpick__av", textContent: initials(d.name) }),
+          el("span", {}, [el("b", { textContent: d.name }), el("small", { textContent: d.loc })])
+        ]);
+        b.addEventListener("click", () => {
+          close();
+          TEAM_PAIRS[peer.id] = d.id;
+          renderDriverCards(peer);
+          toast(`${d.name} added as co-driver`);
+        });
+        return b;
+      })
+    ]);
+    /* Fixed to the window so the scrolling panel can never clip it: under the
+       tile when there's room, otherwise above, otherwise pinned in view. */
+    document.body.append(pop);
+    const hr = host.getBoundingClientRect(), tr = tile.getBoundingClientRect(), h = pop.offsetHeight;
+    pop.style.width = Math.round(hr.width * 0.76) + "px";
+    pop.style.left = Math.round(hr.right - hr.width * 0.76) + "px";
+    let top = tr.bottom - 6;
+    if (top + h > innerHeight - 8) top = tr.top - h + 6;
+    pop.style.top = Math.max(8, Math.min(top, innerHeight - h - 8)) + "px";
+    scroller = host.closest(".details__scroll");
+    scroller.addEventListener("scroll", close, { once: true });
+    setTimeout(() => { document.addEventListener("click", away, true); document.addEventListener("keydown", esc); });
+  }
+
+  function emptyTile(peer) {
+    const tile = el("button", { type: "button", className: "dtile dtile--empty" }, [
+      el("span", { className: "dtile__label", textContent: "Co-driver" }),
+      el("span", { className: "dtile__add" }, svg('<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/>')),
+      el("b", { textContent: "Add co-driver" }),
+      el("small", { textContent: "No one assigned" })
+    ]);
+    tile.addEventListener("click", () => openCopilotMenu(tile, peer));
+    return tile;
+  }
+
+  function unitTile(label, value, pathD, extra, tone) {
+    const tile = el("button", { type: "button", className: "dunit", title: `Copy ${label.toLowerCase()} number` }, [
+      el("span", { className: "dunit__tile" + (tone ? " dunit__tile--" + tone : "") }, svg(pathD)),
+      el("span", { className: "dunit__body" }, [
+        el("small", { textContent: label }),
+        el("span", { className: "dunit__val" }, [el("b", { textContent: value }), extra || null])
+      ])
+    ]);
+    tile.addEventListener("click", () => {
       try { navigator.clipboard && navigator.clipboard.writeText(value); } catch (e) { /* clipboard blocked */ }
       toast(`${label} ${value} copied`);
     });
-    return btn;
+    return tile;
+  }
+
+  /* The other driver on the truck, shown in the header card beside the one
+     whose chat is open. `null` puts the header back to a single profile. */
+  function renderHeroCo(other) {
+    const col = $('[data-role="hero-co"]');
+    col.hidden = !other;
+    col.parentElement.classList.toggle("card--duo", !!other);
+    if (!other) return;
+    const av = $('[data-role="co-hero-avatar"]');
+    paintAvatar(av, other.name);
+    av.classList.toggle("is-online", !!other.online);
+    setPhoto(av, photoOf(other.name));
+    $('[data-role="co-hero-name"]').textContent = other.name;
+    const role = $('[data-role="co-hero-role"]');
+    role.textContent = other.role;
+    role.dataset.tone = ROLE_TONE[other.role] || "slate";
+    $('[data-role="co-hero-org"]').textContent = other.org || "";
+    $('[data-role="co-hero-chips"]').replaceChildren(
+      el("span", { className: "dchip" }, [svg('<path d="M3 12h4l3-8 4 16 3-8h4"/>'), other.source === "Samsara" ? "Samsara ELD" : other.source])
+    );
   }
 
   function renderDriverCards(peer) {
     const equipSlot = $('[data-role="equip-slot"]');
     const hosSlot = $('[data-role="hos-slot"]');
     const driver = isDriverRole(peer.role);
-    equipSlot.hidden = hosSlot.hidden = !driver;
-    if (!driver) { equipSlot.replaceChildren(); hosSlot.replaceChildren(); return; }
+    equipSlot.closest(".acc").hidden = hosSlot.closest(".acc").hidden = !driver;
+    if (!driver) { equipSlot.replaceChildren(); hosSlot.replaceChildren(); renderHeroCo(null); return; }
 
     const partner = CONVERSATIONS.find((c) => c.id === TEAM_PAIRS[peer.id]);
     const isCo = peer.role === "Co-Driver";
-    const driverC = isCo ? partner : peer;
-    const coC = isCo ? peer : partner;
+    const driverC = isCo && partner ? partner : peer;
+    const coC = isCo ? (partner ? peer : null) : partner;
 
-    const rows = [];
-    if (driverC) rows.push(driverRow("Driver", driverC, driverC === peer));
-    if (coC) rows.push(driverRow("Co-driver", coC, coC === peer));
-    else {
-      const add = el("button", { type: "button", className: "drow__add", textContent: "Assign +" });
-      add.addEventListener("click", () => toast("Choose a co-driver for this truck"));
-      rows.push(el("div", { className: "drow drow--empty" }, [
-        el("span", { className: "drow__tile" }, svg('<circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M19 8v6M16 11h6"/>')),
-        el("span", { className: "drow__body" }, [
-          el("span", { className: "drow__label", textContent: "Co-driver" }),
-          el("span", { className: "drow__value", textContent: "Solo — none assigned" })
-        ]),
-        add
-      ]));
-    }
+    renderHeroCo(coC ? (coC === peer ? driverC : coC) : null);
 
-    const head = el("header", { className: "dhead" }, [
-      el("span", { className: "dhead__icon" }, svg('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M3 12h7M14 12h7M12 14v7"/>')),
-      el("div", { className: "dhead__text" }, [
-        el("h4", { textContent: "Driver & equipment" }),
-        el("p", { textContent: "Who is on the truck right now" })
-      ]),
-      coC ? el("span", { className: "dbadge dbadge--amber", textContent: "Team" }) : el("span", { className: "dbadge dbadge--slate", textContent: "Solo" })
-    ]);
-    const units = el("div", { className: "dgrid2" }, [
-      unitRow("Truck", EQUIPMENT.truck, '<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>'),
-      unitRow("Trailer", EQUIPMENT.trailer, '<rect x="2" y="6" width="19" height="10" rx="1.5"/><circle cx="7" cy="18.5" r="1.5"/><circle cx="14" cy="18.5" r="1.5"/>')
-    ]);
-    equipSlot.replaceChildren(el("section", { className: "dcard" }, [head, el("div", { className: "dlist" }, [...rows, units])]));
+    const temp = el("span", { className: "dbadge dbadge--blue dunit__temp" }, [svg('<path d="M12 3v18M4.5 7.5l15 9M4.5 16.5l15-9"/>'), EQUIPMENT.temp]);
+    equipSlot.replaceChildren(el("div", { className: "dequip" }, [
+      driverTile("Driver", driverC, driverC === peer),
+      coC ? driverTile("Co-driver", coC, coC === peer) : emptyTile(peer),
+      unitTile("Truck", EQUIPMENT.truck, '<path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/>'),
+      unitTile("Reefer trailer", EQUIPMENT.trailer, '<rect x="2" y="6" width="19" height="10" rx="1.5"/><circle cx="7" cy="18.5" r="1.5"/><circle cx="14" cy="18.5" r="1.5"/>', temp, "blue")
+    ]));
 
-    const team = coC && driverC ? [
+    const team = coC ? [
       { key: driverC.id, label: "Driver", name: driverC.name },
       { key: coC.id, label: "Co-driver", name: coC.name }
     ] : null;
     hosSlot.replaceChildren(buildHosCard({ key: peer.id, name: peer.name, team }));
+    $('[data-acc="hos"] .dhead__text p').textContent = `Live from the ELD · ${peer.name}`;
   }
 
   /* =====================================================================
@@ -7216,7 +7640,8 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
      ===================================================================*/
   const hosMins = (s) => { const [h, m] = s.split(":").map(Number); return h * 60 + m; };
   const hosFmt = (m) => { m = Math.max(0, m); return Math.floor(m / 60) + ":" + String(m % 60).padStart(2, "0"); };
-  const hosTone = (pct) => (pct >= 0.5 ? "green" : pct >= 0.25 ? "amber" : "red");
+  const hosTone = (pct) => (pct >= 0.3 ? "green" : pct >= 0.15 ? "amber" : "red");
+  const hosHM = (m) => { m = Math.max(0, m); return Math.floor(m / 60) + "h " + String(m % 60).padStart(2, "0") + "m"; };
   const hosClock = (h) => {
     const mm = Math.round((h % 1) * 60), hh = Math.floor(h) + (mm === 60 ? 1 : 0), m2 = mm === 60 ? 0 : mm;
     const h12 = ((hh + 11) % 12) + 1;
@@ -7251,7 +7676,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     }, [
       el("div", { className: "hosring__circle" }, [s, el("span", { className: "hosring__num", textContent: hosFmt(left) })]),
       el("span", { className: "hosring__label", textContent: ring.label }),
-      el("span", { className: "hosring__limit", textContent: "of " + ring.limit })
+      el("span", { className: "hosring__limit", textContent: "of " + ring.limit.replace(/:00$/, "h") })
     ]);
   }
 
@@ -7337,11 +7762,15 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
       const driving = data.dutyCode === "D";
       parts.push(el("div", { className: "hos__status" }, [
         el("span", { className: "dbadge dbadge--" + (HOS_BADGE[data.dutyCode] || "slate") }, [el("b", { textContent: data.dutyCode }), data.duty]),
-        el("span", { className: "dchip" }, [svg('<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>'), `Cycle ${data.cycleShort}`]),
+        el("span", { className: "dchip" }, [svg('<path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>'), `Cycle ${hosHM(left[3]).replace(/ 0(\d)m/, " $1m")} left`]),
         el("span", { className: "dchip" }, [svg('<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>'), `Avail. tomorrow ${data.availTomorrow}`]),
         driving ? el("span", { className: "hos__live", textContent: "Live" }) : null
       ]));
-      parts.push(hosLogEl(data));
+      const n = data.note;
+      if (n) parts.push(el("div", { className: "hos__note hos__note--" + n.tone }, [
+        el("b", {}, [svg('<path d="m5 12.5 4.5 4.5L19 7.5"/>'), n.title]),
+        el("p", { textContent: n.text })
+      ]));
       body.replaceChildren(...parts);
     }
     paint(true);
@@ -7369,7 +7798,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
        button just brings it into view (and opens it if it was collapsed). */
     const slotCard = btn.closest('[data-view="details"]') && $('[data-role="hos-slot"] .hoscard');
     if (slotCard) {
-      if (slotCard.classList.contains("is-collapsed")) slotCard.querySelector(".hoscard__toggle").click();
+      setAcc(slotCard.closest(".acc"), true);
       slotCard.classList.remove("is-flash"); void slotCard.offsetWidth; slotCard.classList.add("is-flash");
       slotCard.scrollIntoView({ behavior: "smooth", block: "nearest" });
       return;
@@ -7835,12 +8264,11 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
   });
 
   /* "Team Details" disclosure inside that panel. */
-  $(".teamdetails__toggle").addEventListener("click", (e) => {
-    const btn = e.currentTarget;
+  $$(".teamdetails__toggle").forEach((btn) => btn.addEventListener("click", () => {
     const open = btn.getAttribute("aria-expanded") !== "true";
     btn.setAttribute("aria-expanded", String(open));
-    $("#team-details-body").hidden = !open;
-  });
+    document.getElementById(btn.getAttribute("aria-controls")).hidden = !open;
+  }));
 
   $$('.tabs__tab[data-tab]').forEach((t) => t.addEventListener("click", () => setTab(t.dataset.tab)));
   $$('.tabs__tab[data-load]').forEach((t) => t.addEventListener("click", () => setLoadTab(t.dataset.load)));
@@ -7910,6 +8338,31 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
       else if (b.dataset.goto === "show-map") openTrackingHistory();
       else setView(b.dataset.goto);
     }));
+  /* Command Center: tracking and check-call go to the existing views; the
+     rest confirm with a toast until their flows exist. */
+  $$(".cmdgrid [data-cmd]").forEach((b) => b.addEventListener("click", () => {
+    const name = b.textContent.trim();
+    if (name === "Track and trace") openTrackingHistory();
+    else if (name === "Request check call") setView("request-location");
+    else if (name === "Resend to driver") setView("request-document");
+    else toast(name);
+  }));
+  $('[data-action="add-member"]').addEventListener("click", () => toast("Choose someone to add to this conversation"));
+
+  /* Files & Images tabs. */
+  $$("[data-ftab]").forEach((b) => b.addEventListener("click", () => {
+    $$("[data-ftab]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    $$("[data-fpanel]").forEach((p) => { p.hidden = p.dataset.fpanel !== b.dataset.ftab; });
+  }));
+  $('[data-action="request-file"]').addEventListener("click", () => setView("request-document"));
+  $('[data-action="upload-file"]').addEventListener("click", () => toast("Choose a file to upload"));
+
+  /* Communication history filter pills. */
+  $$(".cfilter [data-filter]").forEach((b) => b.addEventListener("click", () => {
+    const f = b.dataset.filter;
+    $$(".cfilter [data-filter]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    $$(".ctl li").forEach((li) => { li.hidden = f !== "all" && li.dataset.type !== f; });
+  }));
   $$('[data-action="close-tracking"]').forEach((b) => b.addEventListener("click", closeTrackingHistory));
   document.addEventListener("click", (e) => {
     if (!moreMenu.hidden && !e.target.closest(".cardacts__more")) closeMenu();
@@ -8054,6 +8507,17 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
       $$('.stack__extra[aria-expanded="true"]').forEach((b) => b.setAttribute("aria-expanded", "false"));
     }
   });
+
+  /* Driver panel rows: one button per row opens/closes its body. */
+  function setAcc(acc, open) {
+    acc.classList.toggle("is-open", open);
+    acc.querySelector(".acc__head").setAttribute("aria-expanded", String(open));
+    acc.querySelector(".acc__body").hidden = !open;
+  }
+  $$(".acc__head").forEach((h) => h.addEventListener("click", () => {
+    const acc = h.closest(".acc");
+    setAcc(acc, !acc.classList.contains("is-open"));
+  }));
 
   /* HOS panel — opens inline below whichever card's icon row was clicked
      (the connected Details card or the Personal Info card). */
