@@ -1064,21 +1064,8 @@ svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width:
 .coload__state svg { width: 15px; height: 12px; flex: 0 0 auto; }
 
 /* ---------- team details panel (View Full Profile) ------------------------
-   Details column for a Teams-channel room: the same 83px card shell as a
-   person/company, then a collapsible "Team Details" disclosure wrapping the
-   member roster. Member cards reuse the roster card look already used by
-   the company people list (white, #ececee hairline, 8px radius). */
-.teamdetails { border-top: 1px solid var(--c-line); }
-.teamdetails__toggle {
-  display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  width: 100%; padding: 14px 15px;
-  background: none; border: 0;
-  font-size: var(--fs-md); font-weight: 500; color: var(--c-ink);
-}
-.teamdetails__chevron { width: 13px; height: 13px; flex: 0 0 auto; color: var(--c-muted); transition: transform .15s ease; }
-.teamdetails__toggle[aria-expanded="false"] .teamdetails__chevron { transform: rotate(-90deg); }
-.teamdetails__body { padding: 0 15px 16px; }
-.teamdetails__label { margin-bottom: 10px; font-size: var(--fs-md); font-weight: 500; color: var(--c-ink-2); }
+   Member rows for the Team / Group details column. The panel itself is the
+   driver panel's hero + collapsible rows (see RIGHT PANEL below). */
 .teammembers { display: flex; flex-direction: column; gap: 10px; }
 .teammember {
   position: relative;
@@ -1933,7 +1920,13 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .card--duo .card__name { font-size: 13px; }
 .card--duo .card__meta { flex-direction: column; align-items: center; gap: 2px; }
 .card--duo .dchips { gap: 4px; }
-.details .view > .acc { background: #fff; border: 1px solid var(--d-line); border-radius: 10px; }
+.details .view > .acc { position: relative; background: #fff; border: 1px solid var(--d-line); border-radius: 10px; transition: opacity .15s ease, box-shadow .15s ease; }
+.details .view > .acc.is-dragging { opacity: .4; box-shadow: 0 0 0 1.5px var(--d-blue); }
+.acc__grip { position: absolute; left: 1px; top: 16px; z-index: 2; display: grid; place-items: center; width: 13px; height: 24px; padding: 0; border: 0; border-radius: 4px; background: none; color: var(--d-faint); opacity: 0; cursor: grab; transition: opacity .15s ease, color .15s ease; }
+.acc__grip svg { width: 11px; height: 11px; fill: currentColor; stroke: none; }
+.acc:hover > .acc__grip, .acc__grip:focus-visible { opacity: 1; }
+.acc__grip:hover { color: var(--d-blue); }
+.acc__grip:active { cursor: grabbing; }
 .acc__head { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; text-align: left; background: none; border: 0; border-radius: 10px; }
 .acc__head .dhead__icon { width: 32px; height: 32px; padding: 8px; }
 .acc__head .dhead__text h4 { font-size: 13px; line-height: 18px; }
@@ -2089,11 +2082,6 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .details .loadmember__remove:hover { color: var(--d-red); }
 
 /* ---------- company / team / mail views ------------------------------------ */
-.details .view > .teamdetails { border-top: 1px solid var(--d-line); }
-.details .teamdetails__toggle { padding: 12px 14px; font-size: 12px; font-weight: 600; color: var(--d-ink); border-radius: 10px; transition: background .15s ease, color .15s ease; }
-.details .teamdetails__toggle:hover { background: var(--d-blue-bg); color: var(--d-blue); }
-.details .teamdetails__body { padding: 2px 14px 14px; }
-.details .teamdetails__label { font-size: 10px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--d-faint); }
 .details .teammember, .details .coload { border: 1px solid var(--d-line); border-radius: 8px; transition: background .15s ease, border-color .15s ease; }
 .details .teammember:hover, .details .coload:hover { background: var(--d-blue-bg); border-color: var(--d-blue-bd); }
 .details .teammember__name { font-size: 12px; font-weight: 600; color: var(--d-ink); }
@@ -2163,15 +2151,6 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .details .card:not(.card--hero) .card__role[data-tone] { height: auto; padding: 0; border: 0; background: none; font-size: 12px; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--d-muted); }
 .details .card:not(.card--hero) .cardacts { margin-top: 10px; }
 
-.details .view > .teamdetails { border: 1px solid var(--d-line); }
-.details .teamdetails__toggle { gap: 12px; padding: 12px 14px; font-size: 13px; font-weight: 700; text-align: left; }
-.details .teamdetails__toggle .dhead__icon { width: 32px; height: 32px; padding: 8px; }
-.details .teamdetails__toggle:hover .dhead__icon, .details .teamdetails__toggle[aria-expanded="true"] .dhead__icon { background: var(--d-blue); border-color: var(--d-blue); color: #fff; }
-.teamdetails__title { flex: 1; min-width: 0; }
-.details .teamdetails__chevron { width: 14px; height: 14px; }
-.details .teamdetails__toggle[aria-expanded="true"] .teamdetails__chevron { transform: rotate(180deg); }
-.details .teamdetails__toggle[aria-expanded="false"] .teamdetails__chevron { transform: none; }
-.details .teamdetails__body { padding: 14px; border-top: 1px solid var(--d-soft); }
 
 .details .assets__head { padding: 12px 14px; }
 .details .assets__head .dhead__icon { width: 32px; height: 32px; padding: 8px; }
@@ -2182,6 +2161,74 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .details .loadmember, .details .teammember, .details .coload, .details .member { border-radius: 10px; }
 .details .view > .kv--stacked, .details .view > .rating { border-radius: 10px; }
 .details .btn--primary { border-radius: 8px; font-weight: 600; }
+
+/* ============================================================================
+   RIGHT PANEL, second pass — Company, Team / Group, Load, Email contact and
+   Personal Info (invitations, SMS, company chat) now sit on the Direct panel's
+   own parts: the photo hero with its meta line and chips, collapsible rows with
+   a 32px tile + title + subtitle + chevron, bordered 10px rows inside them.
+   Markup hooks and handlers are unchanged.
+   ==========================================================================*/
+.details .hero__col .cardacts { margin-top: 12px; }
+.details .card--hero .card__meta { flex-wrap: wrap; justify-content: center; gap: 2px 10px; }
+.details .card--hero .card__meta > span:not(.card__role):not(:empty) { color: var(--d-body); }
+.details .card--hero .card__name .link { padding: 0; border: 0; background: none; font: inherit; color: inherit; letter-spacing: inherit; }
+.details .card--hero .card__name .link:hover { text-decoration: none; }
+.card__tag { margin: 0; font-size: 11px; line-height: 16px; color: var(--d-muted); }
+.card__tag[hidden] { display: none; }
+/* the inline HOS panel opens inside the hero, under the action row */
+.details .hero__col > .hoscard, .details .hero__col > .hos-panel { width: 100%; margin-top: 10px; border: 1px solid var(--d-line); border-radius: 10px; text-align: left; overflow: hidden; }
+
+/* company loads — a row per load: id + distance left, status badge right */
+.details .acc__body > .coloads { gap: 8px; padding: 0; margin: 0; list-style: none; }
+.details .coload { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 10px; min-height: 0; padding: 9px 12px; }
+.details .coload__id, .details .coload__miles { grid-column: 1; }
+.details .coload__id { line-height: 16px; }
+.details .coload__miles { line-height: 14px; }
+.details .coload__state { grid-column: 2; grid-row: 1 / span 2; align-self: center; gap: 5px; height: 22px; padding: 0 8px; border: 1px solid var(--d-blue-bd); border-radius: 5px; background: var(--d-blue-bg); font-size: 10px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--d-blue); }
+.details .coload__state svg { width: 12px; height: 10px; }
+.details .coload__state[data-state="scheduled"] { background: var(--d-amber-bg); border-color: var(--d-amber-bd); color: var(--d-amber); }
+.details .coload__state[data-state="delivered"] { background: var(--d-green-bg); border-color: var(--d-green-bd); color: var(--d-green); }
+
+/* team / group roster — name + role left, time, then a remove control */
+.details .teammembers { gap: 8px; }
+.details .teammember { grid-template-columns: 35px minmax(0, 1fr) auto auto; gap: 0 10px; padding: 9px 10px; border-radius: 10px; }
+.details .teammember__body { gap: 1px; }
+.details .teammember__name { line-height: 16px; }
+.details .teammember__role { line-height: 14px; font-weight: 400; }
+.details .teammember__time { align-self: center; font-weight: 400; }
+.details .teammember__remove { position: static; display: grid; place-items: center; width: 24px; height: 24px; padding: 5px; border-radius: 6px; color: var(--d-faint); opacity: 1; transition: background .15s ease, color .15s ease; }
+.details .teammember__remove:hover { background: var(--d-red-bg); color: var(--d-red); }
+.details .teammember__remove svg { width: 14px; height: 14px; }
+.details .acc__body > .teamdetails__add { display: block; width: 100%; margin-top: 8px; }
+.details .acc__body > .teamdetails__add[hidden] { display: none; }
+
+/* load members sit straight in the row body */
+.details [data-view="load-details"] .acc__body > .members { padding: 0; }
+/* the open member's action strip spans the card like the hero's does — at the
+   old fixed 31px column the icons were squeezed down to a 1px sliver */
+.details .cardacts--member { width: 100%; }
+.details .cardacts--member > li { flex: 1 1 0; }
+.details .cardacts--member .cardacts__icon { height: 30px; }
+
+/* profile fields — the equipment rows' shape: tile, label over value, copy */
+.dfields { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.dfields .drow { position: relative; grid-template-columns: 34px minmax(0, 1fr); font: inherit; }
+/* the copy glyph floats over the row's right edge on hover rather than
+   taking a column, so long values (emails) get the full width */
+.dfields .drow__copy { position: absolute; right: 8px; top: 50%; margin-top: -11px; background: var(--d-blue-bg); }
+.dfields .drow__value { white-space: pre-line; overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+.dfields .drow__value.is-empty { font-weight: 400; color: var(--d-faint); }
+.dfields div.drow .drow__tile { background: var(--d-page); }
+
+/* reviews — one flat row: star tile, count, stars */
+.details .view > .dreview { display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #fff; border: 1px solid var(--d-line); border-radius: 10px; transition: border-color .15s ease; }
+.dreview .dhead__icon { width: 32px; height: 32px; padding: 8px; }
+.dreview .dhead__text h4 { font-size: 13px; line-height: 18px; }
+.dreview:hover { border-color: var(--d-blue-bd); }
+.dreview:hover .dhead__icon { background: var(--d-blue); border-color: var(--d-blue); color: #fff; }
+.dreview .rating__stars { display: flex; flex: 0 0 auto; gap: 2px; }
+.dreview .rating__stars svg { width: 14px; height: 14px; }
 </style>
 </head>
 <body>
@@ -2682,28 +2729,56 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
            have hours of service), and the load tabs list that company's
            loads as compact rows instead of one expandable load card. -->
       <section class="view" data-view="company-details" hidden>
-        <div class="card">
-          <span class="avatar avatar--83" data-role="co-avatar" data-initials="ML" aria-hidden="true"></span>
-          <h3 class="card__name">
-            <span data-role="co-name">Megacorp Logistics</span>
-            <svg class="verified" viewBox="0 0 16 16" aria-label="Verified"><circle cx="8" cy="8" r="8" fill="currentColor" stroke="none"/><path d="m4.6 8.2 2.2 2.2 4.6-4.6" stroke="#fff" stroke-width="1.7" fill="none"/></svg>
-          </h3>
-          <p class="card__role">Company</p>
-
-          <ul class="cardacts" role="list">
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More</button></li>
-          </ul>
+        <div class="card card--hero">
+          <div class="hero__col">
+            <span class="avatar avatar--83" data-role="co-avatar" data-initials="ML" aria-hidden="true"></span>
+            <h3 class="card__name">
+              <span data-role="co-name">Megacorp Logistics</span>
+              <svg class="verified" viewBox="0 0 16 16" aria-label="Verified"><circle cx="8" cy="8" r="8" fill="currentColor" stroke="none"/><path d="m4.6 8.2 2.2 2.2 4.6-4.6" stroke="#fff" stroke-width="1.7" fill="none"/></svg>
+            </h3>
+            <p class="card__meta"><span class="card__role">Company</span><span data-role="co-loc">Roanoke, VA</span></p>
+            <div class="dchips" data-role="co-chips"></div>
+            <ul class="cardacts" role="list">
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More</button></li>
+            </ul>
+          </div>
         </div>
 
-        <div class="tabs tabs--sub" role="tablist" aria-label="Company loads">
-          <button type="button" class="tabs__tab" role="tab" id="col-current"  aria-selected="true"  aria-controls="co-loads" data-coload="current">Current Load</button>
-          <button type="button" class="tabs__tab" role="tab" id="col-upcoming" aria-selected="false" aria-controls="co-loads" data-coload="upcoming">Upcoming Load</button>
-          <button type="button" class="tabs__tab" role="tab" id="col-historic" aria-selected="false" aria-controls="co-loads" data-coload="historic">Historic Load</button>
-        </div>
-        <ul class="coloads" id="co-loads" role="tabpanel" aria-labelledby="col-current" tabindex="0" data-role="co-loads"></ul>
+        <section class="acc" data-acc="co-cmd">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-co-cmd">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="dhead__text"><h4>Command Center</h4><p>Company actions</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-co-cmd" hidden>
+            <div class="cmdgrid">
+              <button type="button" data-cmd>New load</button>
+              <button type="button" data-cmd>Request rate</button>
+              <button type="button" data-cmd data-goto="share-tracking">Share tracking</button>
+              <button type="button" data-cmd data-goto="request-document">Send document</button>
+              <button type="button" data-cmd>Invite someone</button>
+              <button type="button" data-cmd>Message everyone</button>
+            </div>
+          </div>
+        </section>
+        <section class="acc is-open" data-acc="co-loads">
+          <button type="button" class="acc__head" aria-expanded="true" aria-controls="acc-co-loads">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></span>
+            <span class="dhead__text"><h4>Loads</h4><p>Current, upcoming and historic</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-co-loads">
+            <div class="tabs tabs--sub" role="tablist" aria-label="Company loads">
+              <button type="button" class="tabs__tab" role="tab" id="col-current"  aria-selected="true"  aria-controls="co-loads" data-coload="current">Current Load</button>
+              <button type="button" class="tabs__tab" role="tab" id="col-upcoming" aria-selected="false" aria-controls="co-loads" data-coload="upcoming">Upcoming Load</button>
+              <button type="button" class="tabs__tab" role="tab" id="col-historic" aria-selected="false" aria-controls="co-loads" data-coload="historic">Historic Load</button>
+            </div>
+            <ul class="coloads" id="co-loads" role="tabpanel" aria-labelledby="col-current" tabindex="0" data-role="co-loads"></ul>
+          </div>
+        </section>
       </section>
 
       <!-- view: team details --------------------------------------------
@@ -2712,22 +2787,39 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
            icons, then a collapsible "Team Details" section holding the
            member roster — each row removable via the red icon. -->
       <section class="view" data-view="team-details" hidden>
-        <div class="card">
-          <span class="avatar avatar--83" data-role="team-avatar" data-initials="CB" aria-hidden="true"></span>
-          <h3 class="card__name"><span data-role="team-name">Chicago Bulls</span></h3>
-          <p class="card__role">Team</p>
+        <div class="card card--hero">
+          <div class="hero__col">
+            <span class="avatar avatar--83" data-role="team-avatar" data-initials="CB" aria-hidden="true"></span>
+            <h3 class="card__name"><span data-role="team-name">Chicago Bulls</span></h3>
+            <p class="card__meta"><span class="card__role" data-role="team-kind">Team</span><span data-role="team-count">6 members</span></p>
+            <p class="card__tag" data-role="team-tagline"></p>
+          </div>
         </div>
 
-        <section class="teamdetails">
-          <h4 class="teamdetails__head">
-            <button type="button" class="teamdetails__toggle" aria-expanded="false" aria-controls="team-details-body">
-              <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
-              <span class="teamdetails__title">Team Details</span>
-              <svg class="teamdetails__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-            </button>
-          </h4>
-          <div class="teamdetails__body" id="team-details-body" hidden>
-            <h5 class="teamdetails__label">Members</h5>
+        <section class="acc" data-acc="team-cmd">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-team-cmd">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="dhead__text"><h4>Command Center</h4><p>Team actions</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-team-cmd" hidden>
+            <div class="cmdgrid">
+              <button type="button" data-cmd>Message team</button>
+              <button type="button" data-cmd data-goto="share-tracking">Share tracking</button>
+              <button type="button" data-cmd data-goto="request-document">Send document</button>
+              <button type="button" data-cmd data-goto="request-location">Request location</button>
+              <button type="button" data-cmd>Mute notifications</button>
+              <button type="button" data-cmd>Leave</button>
+            </div>
+          </div>
+        </section>
+        <section class="acc is-open" data-acc="team">
+          <button type="button" class="acc__head" aria-expanded="true" aria-controls="acc-team">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
+            <span class="dhead__text"><h4 data-role="team-title">Member Details</h4><p data-role="team-sub">Open a member's chat and loads</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-team">
             <ul class="teammembers" role="list" data-role="team-members"></ul>
             <!-- Groups channel only — the Teams details panel has no such
                  control in its Figma frame. -->
@@ -2946,45 +3038,75 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
            action, and under it "Company Details" lists the contact's record
            with their review score at the bottom. -->
       <section class="view" data-view="mail-contact" hidden>
-        <div class="card">
-          <span class="avatar avatar--83" data-role="mc-avatar" data-initials="DS" aria-hidden="true"></span>
-          <h3 class="card__name"><span data-role="mc-name">Dwight Schrute</span></h3>
-          <p class="card__role card__role--mail" data-role="mc-email">schrute@gmail.com</p>
-
-          <ul class="cardacts" role="list">
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
-            <li class="cardacts__more">
-              <button type="button" data-action="mail-more" aria-haspopup="menu" aria-expanded="false" aria-controls="mail-more-menu">
-                <span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More
-              </button>
-              <ul class="menu" id="mail-more-menu" role="menu" hidden>
-                <li role="none"><button role="menuitem" type="button" data-goto="request-document">Request Document</button></li>
-                <li role="none"><button role="menuitem" type="button" data-goto="request-location">Request Location Update</button></li>
-                <li role="none"><button role="menuitem" type="button" data-goto="personal-info">Personal Info</button></li>
-                <li role="none"><button role="menuitem" type="button" data-action="add-notes">Add Notes</button></li>
-              </ul>
-            </li>
-          </ul>
+        <div class="card card--hero">
+          <div class="hero__col">
+            <span class="avatar avatar--83" data-role="mc-avatar" data-initials="DS" aria-hidden="true"></span>
+            <h3 class="card__name"><span data-role="mc-name">Dwight Schrute</span></h3>
+            <p class="card__meta"><span class="card__role">Email contact</span><span data-role="mc-email">schrute@gmail.com</span></p>
+            <div class="dchips" data-role="mc-chips"></div>
+            <ul class="cardacts" role="list">
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
+              <li class="cardacts__more">
+                <button type="button" data-action="mail-more" aria-haspopup="menu" aria-expanded="false" aria-controls="mail-more-menu">
+                  <span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More
+                </button>
+                <ul class="menu" id="mail-more-menu" role="menu" hidden>
+                  <li role="none"><button role="menuitem" type="button" data-goto="request-document">Request Document</button></li>
+                  <li role="none"><button role="menuitem" type="button" data-goto="request-location">Request Location Update</button></li>
+                  <li role="none"><button role="menuitem" type="button" data-goto="personal-info">Personal Info</button></li>
+                  <li role="none"><button role="menuitem" type="button" data-action="add-notes">Add Notes</button></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
         </div>
 
-        <section class="teamdetails">
-          <h4 class="teamdetails__head">
-            <button type="button" class="teamdetails__toggle" aria-expanded="false" aria-controls="mail-company-body">
-              <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></span>
-              <span class="teamdetails__title">Company Details</span>
-              <svg class="teamdetails__chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
-            </button>
-          </h4>
-          <div class="teamdetails__body" id="mail-company-body" hidden>
-            <dl class="kv kv--stacked" data-role="mc-fields"></dl>
-            <div class="mailreviews">
-              <p class="mailreviews__count" data-role="mc-reviews">715 Reviews</p>
-              <span class="stars" data-role="mc-stars" aria-hidden="true"></span>
+        <section class="acc" data-acc="mc-cmd">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-mc-cmd">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="dhead__text"><h4>Command Center</h4><p>Contact actions</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-mc-cmd" hidden>
+            <div class="cmdgrid">
+              <button type="button" data-cmd data-goto="request-document">Request document</button>
+              <button type="button" data-cmd data-goto="request-location">Request location</button>
+              <button type="button" data-cmd data-goto="share-tracking">Share tracking</button>
+              <button type="button" data-cmd data-goto="personal-info">Personal info</button>
+              <button type="button" data-cmd>Add notes</button>
+              <button type="button" data-cmd>Block sender</button>
             </div>
           </div>
         </section>
+        <section class="acc is-open" data-acc="mc-contact">
+          <button type="button" class="acc__head" aria-expanded="true" aria-controls="acc-mc-contact">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>
+            <span class="dhead__text"><h4>Contact Details</h4><p>Email, phone and channel</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-mc-contact">
+            <ul class="dfields" role="list" data-role="mc-contact"></ul>
+          </div>
+        </section>
+
+        <section class="acc" data-acc="mc-company">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-mc-company">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/></svg></span>
+            <span class="dhead__text"><h4>Company Details</h4><p>Role, office and address</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-mc-company" hidden>
+            <ul class="dfields" role="list" data-role="mc-fields"></ul>
+          </div>
+        </section>
+
+        <div class="dreview">
+          <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18l-5.9 3 1.2-6.5L2.5 9.9 9.1 9 12 3Z"/></svg></span>
+          <span class="dhead__text"><h4>Reviews</h4><p data-role="mc-reviews">715 Reviews</p></span>
+          <span class="rating__stars" data-role="mc-stars" aria-hidden="true"></span>
+        </div>
       </section>
 
       <!-- view: load details --------------------------------------------
@@ -2996,28 +3118,65 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
            load — and no Images/Files. The Members roster only appears once
            you're in a member's thread. -->
       <section class="view" data-view="load-details" hidden>
-        <div class="card">
-          <span class="avatar avatar--83" data-role="ld-avatar" data-initials="DL" aria-hidden="true"></span>
-          <h3 class="card__name"><button type="button" class="link" data-role="ld-id">DTL-876567</button></h3>
-          <p class="card__role" data-role="ld-customer">Megacorp</p>
-
-          <ul class="cardacts" role="list">
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></span>HOS</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More</button></li>
-          </ul>
+        <div class="card card--hero">
+          <div class="hero__col">
+            <span class="avatar avatar--83" data-role="ld-avatar" data-initials="DL" aria-hidden="true"></span>
+            <h3 class="card__name"><button type="button" class="link" data-role="ld-id">DTL-876567</button></h3>
+            <p class="card__meta"><span class="card__role">Load</span><span data-role="ld-customer">Megacorp</span></p>
+            <div class="dchips" data-role="ld-chips"></div>
+            <ul class="cardacts" role="list">
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg></span>HOS</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More</button></li>
+            </ul>
+          </div>
         </div>
 
-        <div class="loadpanel" data-role="ld-panel"></div>
+        <section class="acc" data-acc="ld-cmd">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-ld-cmd">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="dhead__text"><h4>Command Center</h4><p>Load actions</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-ld-cmd" hidden>
+            <div class="cmdgrid">
+              <button type="button" data-cmd>Edit load</button>
+              <button type="button" data-cmd data-goto="request-location">Request check call</button>
+              <button type="button" data-cmd>Track and trace</button>
+              <button type="button" data-cmd>Repower options</button>
+              <button type="button" data-cmd>Issue funds</button>
+              <button type="button" data-cmd>BOL generator</button>
+              <button type="button" data-cmd>Invoice / payments</button>
+              <button type="button" data-cmd data-goto="request-document">Resend to driver</button>
+              <button type="button" data-cmd>Copy load</button>
+              <button type="button" data-cmd>Toll / fuel data</button>
+              <button type="button" data-cmd>OS&amp;D</button>
+              <button type="button" data-cmd>Post to loadboard</button>
+            </div>
+          </div>
+        </section>
+        <section class="acc is-open" data-acc="ld-load">
+          <button type="button" class="acc__head" aria-expanded="true" aria-controls="acc-ld-load">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5h8v2"/></svg></span>
+            <span class="dhead__text"><h4>Load Details</h4><p>Route, stops and documents</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-ld-load">
+            <div class="loadpanel" data-role="ld-panel"></div>
+          </div>
+        </section>
 
-        <section class="assets" data-role="ld-members-wrap" hidden>
-          <header class="assets__head">
+        <section class="acc is-open" data-acc="ld-members" data-role="ld-members-wrap" hidden>
+          <button type="button" class="acc__head" aria-expanded="true" aria-controls="acc-ld-members">
             <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5c2.4 0 4.2 1.9 4.2 4.5"/></svg></span>
-            <div class="dhead__text"><h4>Members</h4><p>Everyone on this load</p></div>
-          </header>
-          <ul class="members" role="list" data-role="ld-members"></ul>
+            <span class="dhead__text"><h4>Members</h4><p>Everyone on this load</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-ld-members">
+            <ul class="members" role="list" data-role="ld-members"></ul>
+          </div>
         </section>
       </section>
 
@@ -3136,29 +3295,69 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
       <!-- view: personal info — a directory result who isn't an active
            conversation yet (pending connection or not on Prochat). -->
       <section class="view" data-view="personal-info" hidden>
-        <div class="card">
-          <span class="avatar avatar--83" data-role="pi-avatar" data-initials="GA" aria-hidden="true"></span>
-          <h3 class="card__name"><span data-role="pi-name">Gary, Asher</span></h3>
-          <p class="card__role" data-role="pi-role">Driver</p>
-
-          <ul class="cardacts" role="list">
-            <li><button type="button" data-action="open-hos"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>HOS</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
-            <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More</button></li>
-          </ul>
+        <div class="card card--hero">
+          <div class="hero__col">
+            <span class="avatar avatar--83" data-role="pi-avatar" data-initials="GA" aria-hidden="true"></span>
+            <h3 class="card__name"><span data-role="pi-name">Gary, Asher</span></h3>
+            <p class="card__meta"><span class="card__role" data-role="pi-role">Driver</span><span data-role="pi-org"></span></p>
+            <div class="dchips" data-role="pi-chips"></div>
+            <ul class="cardacts" role="list">
+              <li><button type="button" data-action="open-hos"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>HOS</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/></svg></span>Call</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>Email</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></span>Cell</button></li>
+              <li><button type="button"><span class="cardacts__icon"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="19" cy="12" r="1.5" fill="currentColor" stroke="none"/></svg></span>More</button></li>
+            </ul>
+          </div>
         </div>
 
         <!-- Only shown on a bare SMS contact's card (Figma 1:36766,
              "Edit Info") — opens the editable form below. -->
         <button type="button" class="link pi-edit" data-action="pi-edit" data-role="pi-edit" hidden>Edit Info</button>
 
-        <dl class="kv kv--stacked" data-role="pi-fields"></dl>
+        <section class="acc" data-acc="pi-cmd">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-pi-cmd">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            <span class="dhead__text"><h4>Command Center</h4><p>Contact actions</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-pi-cmd" hidden>
+            <div class="cmdgrid">
+              <button type="button" data-cmd data-goto="request-document">Request document</button>
+              <button type="button" data-cmd data-goto="request-location">Request location</button>
+              <button type="button" data-cmd data-goto="share-tracking">Share tracking</button>
+              <button type="button" data-cmd>Add notes</button>
+              <button type="button" data-cmd>Invite to load</button>
+              <button type="button" data-cmd>Report</button>
+            </div>
+          </div>
+        </section>
+        <section class="acc is-open" data-acc="pi-contact">
+          <button type="button" class="acc__head" aria-expanded="true" aria-controls="acc-pi-contact">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg></span>
+            <span class="dhead__text"><h4>Contact Details</h4><p>Email, phone and channel</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-pi-contact">
+            <ul class="dfields" role="list" data-role="pi-contact"></ul>
+          </div>
+        </section>
 
-        <div class="rating" data-role="pi-rating">
-          <p class="rating__count"><span data-role="pi-review-count">0</span> Reviews</p>
-          <div class="rating__stars" data-role="pi-stars" aria-hidden="true"></div>
+        <section class="acc" data-acc="pi-company">
+          <button type="button" class="acc__head" aria-expanded="false" aria-controls="acc-pi-company">
+            <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/></svg></span>
+            <span class="dhead__text"><h4>Personal Info</h4><p>Role, office and address</p></span>
+            <svg class="acc__chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg>
+          </button>
+          <div class="acc__body" id="acc-pi-company" hidden>
+            <ul class="dfields" role="list" data-role="pi-fields"></ul>
+          </div>
+        </section>
+
+        <div class="dreview" data-role="pi-rating">
+          <span class="dhead__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18l-5.9 3 1.2-6.5L2.5 9.9 9.1 9 12 3Z"/></svg></span>
+          <span class="dhead__text"><h4>Reviews</h4><p><span data-role="pi-review-count">0</span> Reviews</p></span>
+          <span class="rating__stars" data-role="pi-stars" aria-hidden="true"></span>
         </div>
 
         <footer class="card__foot">
@@ -4843,7 +5042,10 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
   function renderMembersPop(room) {
     $('[data-role="members-pop-list"]').replaceChildren(...room.members.map((m) =>
-      el("li", { className: "members-pop__item" }, [avatar(m, 29, true), el("span", { textContent: m })])));
+      el("li", {
+        className: "members-pop__item", role: "button", tabIndex: 0,
+        onclick: () => { if (state.openTeamId === room.id) openTeamMemberChat(room, m); }
+      }, [avatar(m, 29, true), el("span", { textContent: m })])));
   }
 
   function roomRow(r) {
@@ -5331,14 +5533,17 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     paintAvatar($('[data-role="mc-avatar"]'), m.name, m.palette);
     $('[data-role="mc-name"]').textContent = m.name;
     $('[data-role="mc-email"]').textContent = m.address;
-    $('[data-role="mc-fields"]').replaceChildren(...mailRecordFor(m).flatMap(([k, v]) => [
-      el("dt", { textContent: k }), el("dd", { textContent: v })
-    ]));
+    setPhoto($('[data-role="mc-avatar"]'), photoOf(m.name));
+    const record = mailRecordFor(m);
+    fillFields($('[data-role="mc-contact"]'), $('[data-role="mc-fields"]'), record);
+    const field = (label) => (record.find(([k]) => k === label) || [])[1];
+    $('[data-role="mc-chips"]').replaceChildren(
+      panelChip(PIN_ICON, field("Office")),
+      panelChip(FIELD_ICONS["Department"], field("Department"))
+    );
     $('[data-role="mc-stars"]').replaceChildren(...Array.from({ length: 5 }, (_, i) => {
       const s = svg('<path d="m12 3 2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 18l-5.9 3 1.2-6.5L2.5 9.9 9.1 9 12 3Z"/>');
-      s.style.color = i < 4 ? "#f5a623" : "#dcdfe4";
-      s.querySelector("path").setAttribute("fill", "currentColor");
-      s.querySelector("path").setAttribute("stroke", "none");
+      if (i >= 4) s.setAttribute("data-empty", "true");
       return s;
     }));
   }
@@ -5572,7 +5777,12 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     paintAvatar($('[data-role="ld-avatar"]'), "Dawson Logistics", 0);
     $('[data-role="ld-id"]').textContent = load.no;
     $('[data-role="ld-customer"]').textContent = "Megacorp";
-    $('[data-role="ld-panel"]').replaceChildren(loadCard(loadRecordFor(load.no)));
+    const rec = loadRecordFor(load.no);
+    $('[data-role="ld-chips"]').replaceChildren(
+      panelChip(null, rec.status, "dchip--on"),
+      panelChip(PIN_ICON, `${rec.origin.city} → ${rec.dest.city}`)
+    );
+    $('[data-role="ld-panel"]').replaceChildren(loadCard(rec));
 
     const inThread = !!state.loadMemberKey;
     $('[data-role="ld-members-wrap"]').hidden = !inThread;
@@ -5800,9 +6010,10 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
      list. This is the "stay in channel" rule Company already follows for
      openCompanyChat, and deliberately the mirror image of clicking a member
      in the Team Details panel, which does jump over to Direct Message. */
-  function openChannelPersonChat(convo) {
+  function openChannelPersonChat(convo, returnTeamId = null) {
     state.activeId = convo.id;
     state.channelChatId = convo.id;
+    state.channelChatReturn = returnTeamId;
     state.openTeamId = null;
     convo.unread = false;
     directoryEl.hidden = true;
@@ -5819,6 +6030,9 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 
   function closeChannelPersonChat() {
     state.channelChatId = null;
+    /* A chat opened from a team's roster goes back to that team room. */
+    state.openTeamId = state.channelChatReturn || null;
+    state.channelChatReturn = null;
     setDetailsState(false);   // the room list has no details column either
     renderPanel();
     renderInbox();
@@ -5850,7 +6064,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     const row = el("div", {
       className: "teammember", role: "button", tabIndex: 0,
       "aria-label": `Open direct message with ${name}`,
-      onclick: () => startChatWith({ name, role: meta.role, org: room.title, loc: meta.loc })
+      onclick: () => openTeamMemberChat(room, name)
     }, [
       avatar(name, 35, true),
       el("span", { className: "teammember__body" }, [
@@ -5863,11 +6077,32 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     row.addEventListener("keydown", (e) => {
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
-        startChatWith({ name, role: meta.role, org: room.title, loc: meta.loc });
+        openTeamMemberChat(room, name);
       }
     });
 
     return el("li", {}, row);
+  }
+
+  /* Opening a team member keeps you inside the Teams channel: the main panel
+     shows their thread, the side panel their driver card with Load Details
+     (Current / Upcoming / Historic) opened. Back returns to the team room. */
+  function openTeamMemberChat(room, name) {
+    const meta = (room.memberMeta && room.memberMeta[name]) || {};
+    let convo = CONVERSATIONS.find((c) => c.name === name);
+    if (!convo) {
+      convo = {
+        id: "adhoc-" + name.toLowerCase().replace(/[^a-z]+/g, "-"), name, role: meta.role || "Member",
+        org: room.title, source: "Prochat", loc: meta.loc || "—", time: now(),
+        preview: "You're now connected.", group: "recent", unread: false, online: true
+      };
+      CONVERSATIONS.unshift(convo);
+      THREADS[convo.id] = [{ day: "Today" }];
+    }
+    membersPopEl.hidden = true;
+    openChannelPersonChat(convo, room.id);
+    const loadAcc = $('[data-acc="load"]');
+    if (loadAcc) setAcc(loadAcc, true);
   }
 
   function renderTeamDetails() {
@@ -5875,8 +6110,17 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     if (!room) return;
     paintAvatar($('[data-role="team-avatar"]'), room.title, room.palette);
     $('[data-role="team-name"]').textContent = room.title;
+    const isGroup = state.channelKind === "groups";
+    const n = room.members.length;
+    $('[data-role="team-kind"]').textContent = isGroup ? "Group" : "Team";
+    $('[data-role="team-count"]').textContent = `${n} member${n === 1 ? "" : "s"}`;
+    const tag = $('[data-role="team-tagline"]');
+    tag.textContent = room.tagline || "";
+    tag.hidden = !room.tagline;
+    $('[data-role="team-title"]').textContent = isGroup ? "Team Members" : "Member Details";
+    $('[data-role="team-sub"]').textContent = isGroup ? "Open a member's chat and loads" : "Members and their roles";
     /* Only the Groups details panel carries "Add New Member +". */
-    addMemberGroupBtn.hidden = state.channelKind !== "groups";
+    addMemberGroupBtn.hidden = !isGroup;
     const list = $('[data-role="team-members"]');
     list.replaceChildren(...room.members.map((m) => teamMemberRow(room, m)));
     if (!room.members.length) {
@@ -5963,18 +6207,34 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     return el("li", { className: "coload" }, [
       el("span", { className: "coload__id", textContent: l.id }),
       el("span", { className: "coload__miles", textContent: l.miles }),
-      el("span", { className: "coload__state" }, [
+      el("span", { className: "coload__state", "data-state": l.state.toLowerCase().replace(/\s+/g, "-") }, [
         svg('<path d="M3 16.5V7.5h11v9"/><path d="M14 10.5h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="2"/><circle cx="17" cy="17.5" r="2"/>'),
         el("span", { textContent: l.state })
       ])
     ]);
   }
 
+  /* Shared by every right-panel hero below the driver's: one chip, same shape
+     the driver card's source chip uses (icon or presence dot, then a label). */
+  const PIN_ICON = '<path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/>';
+  const panelChip = (icon, text, cls = "") => el("span", { className: "dchip " + cls }, [
+    icon ? svg(icon) : el("span", { className: "dchip__dot" }), text
+  ]);
+
   function renderCompanyDetails() {
     const company = COMPANIES.find((c) => c.id === state.openCompanyId);
     if (!company) return;
-    paintAvatar($('[data-role="co-avatar"]'), company.name);
+    const av = $('[data-role="co-avatar"]');
+    paintAvatar(av, company.name);
+    /* The company's own logo, where it has one, takes the photo slot. */
+    setPhoto(av, company.logo);
     $('[data-role="co-name"]').textContent = company.name;
+    $('[data-role="co-loc"]').textContent = company.loc;
+    const people = company.people;
+    $('[data-role="co-chips"]').replaceChildren(
+      panelChip(null, `${people.connected.length} connected`, "dchip--on"),
+      ...(people.pending.length ? [panelChip('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', `${people.pending.length} pending`)] : [])
+    );
     coLoadsEl.replaceChildren(...(COMPANY_LOADS[state.coLoadTab] || []).map(coLoadRow));
   }
 
@@ -6319,6 +6579,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     detailsTitle.textContent = VIEW_TITLE[view];
     $$(".view").forEach((v) => { v.hidden = v.dataset.view !== view; });
     closeMenu();
+    closeHos();
   }
 
   const LOAD_TAB_LABEL = { current: "Current", upcoming: "Upcoming", historic: "Historic" };
@@ -6476,7 +6737,8 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
      this, "View More Details" inside the Loads channel flipped the state but
      re-rendered the person's panel, so nothing appeared to happen. */
   function renderLoadPanelActive() {
-    if (state.view === "load-details" && state.openLoadId) renderLoadDetails();
+    if (state.view === "team-details") renderTeamDetails();
+    else if (state.view === "load-details" && state.openLoadId) renderLoadDetails();
     else renderLoadPanel();
   }
 
@@ -6731,17 +6993,73 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     ["preferred", "Preferred Contact Method"], ["prochatId", "ProChat ID"]
   ];
 
+  /* One icon per profile field, so a row reads at a glance. */
+  const FIELD_ICONS = {
+    "Full Name": '<circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/>',
+    "Address": PIN_ICON,
+    "Email": '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/>',
+    "Office": '<path d="M3 21V8l9-5 9 5v13"/><path d="M9 21v-6h6v6"/>',
+    "Department": '<rect x="3" y="7" width="18" height="12" rx="2"/><path d="M8 7V5h8v2"/>',
+    "Timezone": '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    "Office Phone": '<path d="M6 3h3l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v3a3 3 0 0 1-3 3A15 15 0 0 1 3 6a3 3 0 0 1 3-3Z"/>',
+    "Cell Phone": '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>',
+    "Fax": '<path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/>',
+    "Start Date/Workiversary": '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',
+    "Preferred Contact Method": '<path d="M4 5h16v11H9l-5 4z"/>',
+    "ProChat ID": '<circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8"/>'
+  };
+  /* The phone / mail / channel rows get their own card; the rest are the
+     person's company record. */
+  const CONTACT_FIELDS = new Set(["Email", "Office Phone", "Cell Phone", "Fax", "Preferred Contact Method", "ProChat ID"]);
+
+  /* A row is a button that copies its value (the way the driver panel's
+     equipment rows copy theirs) — unless there's nothing in it yet. */
+  function fieldRow(label, value) {
+    const has = value && value !== "—";
+    const body = [
+      el("span", { className: "drow__tile" }, svg(FIELD_ICONS[label] || FIELD_ICONS["Full Name"])),
+      el("span", { className: "drow__body" }, [
+        el("span", { className: "drow__label", textContent: label }),
+        el("span", { className: "drow__value" + (has ? "" : " is-empty"), textContent: has ? value : (value ? "—" : "") })
+      ])
+    ];
+    if (!has) return el("li", {}, el("div", { className: "drow" }, body));
+    body.push(el("span", { className: "drow__copy", "aria-hidden": "true" },
+      svg('<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/>')));
+    const row = el("button", { type: "button", className: "drow", title: `Copy ${label.toLowerCase()}` }, body);
+    row.addEventListener("click", () => {
+      try { navigator.clipboard && navigator.clipboard.writeText(value.replace(/\n/g, ", ")); } catch (e) { /* clipboard blocked */ }
+      toast(`${label} copied`);
+    });
+    return el("li", {}, row);
+  }
+
+  function fillFields(contactList, companyList, pairs) {
+    contactList.replaceChildren(...pairs.filter(([k]) => CONTACT_FIELDS.has(k)).map(([k, v]) => fieldRow(k, v)));
+    companyList.replaceChildren(...pairs.filter(([k]) => !CONTACT_FIELDS.has(k)).map(([k, v]) => fieldRow(k, v)));
+  }
+
   function renderPersonalInfo(person, opts = {}) {
-    paintAvatar($('[data-role="pi-avatar"]'), person.name);
+    const piAv = $('[data-role="pi-avatar"]');
+    paintAvatar(piAv, person.name);
+    setPhoto(piAv, photoOf(person.name));
     $('[data-role="pi-name"]').textContent = person.name;
     $('[data-role="pi-role"]').textContent = person.role;
+    $('[data-role="pi-org"]').textContent = person.org || "";
+
+    /* Where this person stands with you, as a chip like the driver card's. */
+    const standing = opts.connected ? ["Connected", "dchip--on"]
+      : person.sentInvite ? ["Invite pending", ""]
+      : person.status === "invite" ? ["Not on Prochat", ""] : ["Not connected", ""];
+    $('[data-role="pi-chips"]').replaceChildren(
+      ...(person.source ? [panelChip('<path d="M3 12h4l3-8 4 16 3-8h4"/>', person.source)] : []),
+      panelChip(standing[1] ? null : '<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.1"/>', standing[0], standing[1])
+    );
 
     /* A brand-new SMS contact (Figma 1:25390) shows every row genuinely
        blank rather than a "—" placeholder — nothing's been entered yet. */
-    $('[data-role="pi-fields"]').replaceChildren(...PI_ROW_LABELS.flatMap(([key, label]) => {
-      const value = person[key] || (opts.editable ? "" : "—");
-      return [el("dt", { textContent: label }), el("dd", { textContent: value })];
-    }));
+    fillFields($('[data-role="pi-contact"]'), $('[data-role="pi-fields"]'), PI_ROW_LABELS.map(([key, label]) =>
+      [label, person[key] || (opts.editable ? "" : "—")]));
 
     $('[data-role="pi-review-count"]').textContent = person.reviews ?? 0;
     const stars = $('[data-role="pi-stars"]');
@@ -8263,13 +8581,6 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     toast(`${name} added to ${room.title}`);
   });
 
-  /* "Team Details" disclosure inside that panel. */
-  $$(".teamdetails__toggle").forEach((btn) => btn.addEventListener("click", () => {
-    const open = btn.getAttribute("aria-expanded") !== "true";
-    btn.setAttribute("aria-expanded", String(open));
-    document.getElementById(btn.getAttribute("aria-controls")).hidden = !open;
-  }));
-
   $$('.tabs__tab[data-tab]').forEach((t) => t.addEventListener("click", () => setTab(t.dataset.tab)));
   $$('.tabs__tab[data-load]').forEach((t) => t.addEventListener("click", () => setLoadTab(t.dataset.load)));
   $$('.tabs__tab[data-company-tab]').forEach((t) => t.addEventListener("click", () => setCompanyTab(t.dataset.companyTab)));
@@ -8342,12 +8653,63 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
      rest confirm with a toast until their flows exist. */
   $$(".cmdgrid [data-cmd]").forEach((b) => b.addEventListener("click", () => {
     const name = b.textContent.trim();
-    if (name === "Track and trace") openTrackingHistory();
+    if (b.dataset.goto === "personal-info") openPersonalInfoForActivePeer();
+    else if (b.dataset.goto) setView(b.dataset.goto);
+    else if (name === "Track and trace") openTrackingHistory();
     else if (name === "Request check call") setView("request-location");
     else if (name === "Resend to driver") setView("request-document");
     else toast(name);
   }));
   $('[data-action="add-member"]').addEventListener("click", () => toast("Choose someone to add to this conversation"));
+
+  /* Driver panel: drag a row by its grip (or use ↑ / ↓ on the focused grip) to
+     reorder the sections. The order is remembered in this browser. */
+  (function initAccReorder() {
+    const view = $('[data-view="details"]');
+    const KEY = "prochat.accOrder";
+    const rows = () => [...view.querySelectorAll(":scope > .acc")];
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(rows().map((a) => a.dataset.acc))); } catch (e) { /* storage blocked */ } };
+    try { JSON.parse(localStorage.getItem(KEY) || "[]").forEach((k) => { const a = view.querySelector(`:scope > .acc[data-acc="${k}"]`); if (a) view.append(a); }); } catch (e) { /* ignore a bad saved order */ }
+
+    let dragging = null;
+    rows().forEach((acc) => {
+      const grip = el("button", { type: "button", className: "acc__grip", title: "Drag to reorder", "aria-label": "Reorder section" },
+        svg('<circle cx="9" cy="6" r="1.4"/><circle cx="15" cy="6" r="1.4"/><circle cx="9" cy="12" r="1.4"/><circle cx="15" cy="12" r="1.4"/><circle cx="9" cy="18" r="1.4"/><circle cx="15" cy="18" r="1.4"/>'));
+      acc.prepend(grip);
+      grip.addEventListener("mousedown", () => { acc.draggable = true; });
+      grip.addEventListener("mouseup", () => { acc.draggable = false; });
+      grip.addEventListener("keydown", (e) => {
+        if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+        e.preventDefault();
+        const vis = rows().filter((a) => !a.hidden), i = vis.indexOf(acc);
+        const to = vis[i + (e.key === "ArrowUp" ? -1 : 1)];
+        if (!to) return;
+        if (e.key === "ArrowUp") to.before(acc); else to.after(acc);
+        grip.focus(); save();
+      });
+      acc.addEventListener("dragstart", (e) => {
+        if (!acc.draggable) return;
+        dragging = acc;
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/plain", acc.dataset.acc);
+        e.dataTransfer.setDragImage(acc, 24, 24);
+        requestAnimationFrame(() => acc.classList.add("is-dragging"));
+      });
+      acc.addEventListener("dragend", () => {
+        acc.draggable = false; acc.classList.remove("is-dragging"); dragging = null; save();
+      });
+    });
+    view.addEventListener("dragover", (e) => {
+      if (!dragging) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+      const others = rows().filter((a) => a !== dragging && !a.hidden);
+      const next = others.find((a) => e.clientY < a.getBoundingClientRect().top + a.getBoundingClientRect().height / 2);
+      if (next) { if (dragging.nextElementSibling !== next) next.before(dragging); }
+      else if (others.length) { const last = others[others.length - 1]; if (last.nextElementSibling !== dragging) last.after(dragging); }
+    });
+    view.addEventListener("drop", (e) => { if (dragging) e.preventDefault(); });
+  })();
 
   /* Files & Images tabs. */
   $$("[data-ftab]").forEach((b) => b.addEventListener("click", () => {
