@@ -2029,7 +2029,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
 .dtile__label { font-size: 11px; line-height: 14px; font-weight: 500; color: var(--d-muted); }
 .dtile__who { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .dtile__who > span { display: flex; flex-direction: column; min-width: 0; }
-.dtile__who .avatar { flex: 0 0 auto; background-size: cover; background-position: center; border-radius: 8px; }
+.dtile__who .avatar { flex: 0 0 auto; display: grid; place-items: center; text-align: center; line-height: 1; background-size: cover; background-position: center; border-radius: 50%; }
 .dtile__who b { font-size: 13px; line-height: 17px; font-weight: 700; color: var(--d-ink); }
 .dtile__who small { font-size: 11px; line-height: 14px; color: var(--d-muted); }
 .dtile .dbadge { align-self: flex-start; height: 22px; font-size: 11px; letter-spacing: 0; text-transform: none; font-weight: 600; }
@@ -4915,7 +4915,7 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
   const HOS_BY = {
     michael: HOS,
     philip: {
-      dutyCode: "SB", duty: "Sleeper berth",
+      dutyCode: "SB", duty: "Sleeper Birth",
       availTomorrow: "62h 30m",
       note: { tone: "rest", title: "Resting in the sleeper berth", text: "Clocks are paused. The next drive window opens once the 10-hour reset completes." },
       rings: [
@@ -7485,7 +7485,8 @@ button.drow:hover .drow__copy { opacity: 1; color: var(--d-blue); }
     role.dataset.tone = ROLE_TONE[other.role] || "slate";
     $('[data-role="co-hero-org"]').textContent = other.org || "";
     $('[data-role="co-hero-chips"]').replaceChildren(
-      el("span", { className: "dchip" }, [svg('<path d="M3 12h4l3-8 4 16 3-8h4"/>'), other.source === "Samsara" ? "Samsara ELD" : other.source])
+      el("span", { className: "dchip" }, [svg('<path d="M3 12h4l3-8 4 16 3-8h4"/>'), other.source === "Samsara" ? "Samsara ELD" : other.source]),
+      dutyCard((HOS_BY[other.id] || HOS).dutyCode, (HOS_BY[other.id] || HOS).duty)
     );
   }
 
